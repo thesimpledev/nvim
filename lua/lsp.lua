@@ -2,17 +2,44 @@ local lspconfig = require('lspconfig')
 
 local servers = {
     gopls = {
-	gofumpt = true,
-	staticcheck = true,
-	analyses = {
-		unusedparams = true
-	},
-	experimentalPostfixCompletions = true,
+		gofumpt = true,
+		staticcheck = true,
+		analyses = {
+			unusedparams = true
+		},
+		experimentalPostfixCompletions = true,
     },                 -- Go
-    rust_analyzer = {},         -- Rust
-    ts_ls = {},                 -- JavaScript/TypeScript
-    pylsp = {},                 -- Python
-    solargraph = {},            -- Ruby
+	rust_analyzer = {
+        settings = {
+            ["rust-analyzer"] = {
+                cargo = {
+                    allFeatures = true,
+                },
+                checkOnSave = {
+                    command = "clippy",
+                },
+            },
+        },
+    }, -- Rust
+    ts_ls = {
+        settings = {
+            completions = {
+                completeFunctionCalls = true,
+            },
+        },
+    }, -- JavaScript/TypeScript
+    pylsp = {
+        settings = {
+            pylsp = {
+                plugins = {
+                    pycodestyle = { enabled = true },
+                    pyflakes = { enabled = true },
+                    pylint = { enabled = false },
+                },
+            },
+        },
+    }, -- Python
+    intelephense = {}, -- PHP
 }
 
 for server, config in pairs(servers) do
@@ -33,3 +60,34 @@ vim.api.nvim_create_autocmd("BufWritePre", {
     end,
 })
 
+-- Rust
+vim.api.nvim_create_autocmd("BufWritePre", {
+    pattern = "*.rs",
+    callback = function()
+        vim.lsp.buf.format({ async = false })
+    end,
+})
+
+-- TypeScript/JavaScript
+vim.api.nvim_create_autocmd("BufWritePre", {
+    pattern = { "*.ts", "*.js" },
+    callback = function()
+        vim.lsp.buf.format({ async = false })
+    end,
+})
+
+-- Python
+vim.api.nvim_create_autocmd("BufWritePre", {
+    pattern = "*.py",
+    callback = function()
+        vim.lsp.buf.format({ async = false })
+    end,
+})
+
+-- PHP
+vim.api.nvim_create_autocmd("BufWritePre", {
+    pattern = "*.php",
+    callback = function()
+        vim.lsp.buf.format({ async = false })
+    end,
+})
