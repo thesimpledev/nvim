@@ -11,6 +11,7 @@ Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'} " Better syntax high
 Plug 'nvim-lua/plenary.nvim'       " Required by some plugins
 Plug 'nvim-telescope/telescope.nvim' " Fuzzy finder
 Plug 'windwp/nvim-autopairs'       " Autopairs for brackets and braces
+Plug 'tomasiser/vim-code-dark'
 call plug#end()
 ]]
 

@@ -43,4 +43,3 @@ require('nvim-autopairs').setup({
 })
 
 
-print("Fast Wrap Loaded!") -- Add this1:
