@@ -11,8 +11,15 @@ Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'} " Better syntax high
 Plug 'nvim-lua/plenary.nvim'       " Required by some plugins
 Plug 'nvim-telescope/telescope.nvim' " Fuzzy finder
 Plug 'windwp/nvim-autopairs'       " Autopairs for brackets and braces
+Plug 'wakatime/vim-wakatime'
+Plug 'morhetz/gruvbox'
+Plug 'sainnhe/everforest'
+Plug 'NLKNguyen/papercolor-theme'
+Plug 'sainnhe/sonokai'
+Plug 'rose-pine/neovim'
+Plug 'jacoborus/tender.vim'
+Plug 'tanvirtin/monokai.nvim'
 
-Plug 'arcticicestudio/nord-vim'
 
 call plug#end()
 ]]
