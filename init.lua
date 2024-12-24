@@ -17,12 +17,18 @@ vim.opt.shiftwidth = 4
 
 vim.opt.list = true -- Enable the display of whitespace characters
 vim.opt.listchars = {
-    space = "·",       -- Display spaces as a middle dot
     tab = "▸ ",        -- Display tabs with an arrow and a space
     trail = "•",       -- Display trailing spaces as a bullet
     extends = "❯",     -- Display lines that extend beyond the window
     precedes = "❮",    -- Display lines that wrap to the previous screen
 }
+
+
+vim.api.nvim_set_keymap('i', '(', '()<Left>', { noremap = true })
+vim.api.nvim_set_keymap('i', '[', '[]<Left>', { noremap = true })
+vim.api.nvim_set_keymap('i', '{', '{}<Left>', { noremap = true })
+vim.api.nvim_set_keymap('i', '"', '""<Left>', { noremap = true })
+vim.api.nvim_set_keymap('i', "'", "''<Left>", { noremap = true })
 
 -- Load plugins
 require('plugins')
