@@ -24,12 +24,6 @@ vim.opt.listchars = {
 }
 
 
-vim.api.nvim_set_keymap('i', '(', '()<Left>', { noremap = true })
-vim.api.nvim_set_keymap('i', '[', '[]<Left>', { noremap = true })
-vim.api.nvim_set_keymap('i', '{', '{}<Left>', { noremap = true })
-vim.api.nvim_set_keymap('i', '"', '""<Left>', { noremap = true })
-vim.api.nvim_set_keymap('i', "'", "''<Left>", { noremap = true })
-
 -- Load plugins
 require('plugins')
 
@@ -39,3 +33,14 @@ require('lsp')
 -- Load autocompletion setup
 require('completion')
 
+require('nvim-autopairs').setup({
+    enable_check_bracket_line = true, -- Don't add a pair if it exists in the same line
+    check_ts = true, -- Use treesitter to handle advanced pair behavior
+    disable_filetype = { "TelescopePrompt" }, -- Disable in specific file types
+    map_cr = true, -- Automatically add closing braces after Enter
+    map_bs = true, -- Allow <BS> to delete both pair characters
+    map_c_h = true, -- Skip over closing braces when typing
+})
+
+
+print("Fast Wrap Loaded!") -- Add this1:
