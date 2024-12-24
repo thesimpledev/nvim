@@ -10,7 +10,10 @@ vim.opt.clipboard = 'unnamedplus'
 vim.opt.splitright = true
 vim.opt.splitbelow = true
 
-vim.opt.termguicolors = false
+vim.opt.termguicolors = false 
+
+vim.opt.cursorline = true
+
 
 vim.opt.tabstop = 4     
 vim.opt.shiftwidth = 4 
@@ -43,3 +46,4 @@ require('nvim-autopairs').setup({
 })
 
 
+vim.cmd [[colorscheme nord]]
