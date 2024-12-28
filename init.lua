@@ -31,3 +31,11 @@ require('plugins')
 require('lsp')
 require('completion')
 require('setup')
+
+vim.cmd([[
+  function! CustomVex()
+    rightbelow vsplit
+    Explore
+  endfunction
+  command! Vex call CustomVex()
+]])
