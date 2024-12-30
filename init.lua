@@ -14,11 +14,16 @@ vim.opt.termguicolors = false
 
 vim.opt.cursorline = true
 
+--Configuring line wraps
+vim.opt.wrap = true
+vim.opt.linebreak = true
+
 
 vim.opt.tabstop = 4     
 vim.opt.shiftwidth = 4 
 
 vim.opt.list = true -- Enable the display of whitespace characters
+vim.opt.scrolloff=8
 vim.opt.listchars = {
     tab = "▸ ",        -- Display tabs with an arrow and a space
     trail = "•",       -- Display trailing spaces as a bullet
@@ -39,3 +44,18 @@ vim.cmd([[
   endfunction
   command! Vex call CustomVex()
 ]])
+
+
+-- Create or get the 'spellcheck' augroup
+local spellcheck_group = vim.api.nvim_create_augroup('spellcheck', { clear = true })
+
+-- Define an autocommand for the 'FileType' event
+vim.api.nvim_create_autocmd('FileType', {
+  group = spellcheck_group,
+  pattern = { 'markdown', 'text' },
+  callback = function()
+    vim.opt_local.spell = true
+    vim.opt_local.spelllang = 'en_us'
+  end,
+})
+
