@@ -18,9 +18,10 @@ vim.opt.cursorline = true
 vim.opt.wrap = true
 vim.opt.linebreak = true
 
-
+vim.opt.softtabstop = 4
 vim.opt.tabstop = 4     
 vim.opt.shiftwidth = 4 
+vim.opt.smartindent = true
 
 vim.opt.list = true -- Enable the display of whitespace characters
 vim.opt.scrolloff=8
@@ -31,6 +32,14 @@ vim.opt.listchars = {
     precedes = "❮",    -- Display lines that wrap to the previous screen
 }
 
+--New Key Mappings
+--Set Leader Key
+vim.g.mapleader = " " -- Set the global leader key to <Space>
+--Disable leader key in insertmode
+vim.keymap.set('i', '<Space>', '<Space>', { noremap = true, silent = true })
+
+vim.keymap.set('n', '<Leader>v', ':Vex<CR>', { noremap = true, silent = true })
+vim.keymap.set('n', '<Leader>e', ':Ex<CR>', { noremap = true, silent = true })
 
 require('plugins')
 require('lsp')
