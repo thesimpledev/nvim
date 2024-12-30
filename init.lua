@@ -1,5 +1,5 @@
 -- Set relative line numbers
---vim.opt.relativenumber = true
+vim.opt.relativenumber = true
 
 -- Also show the absolute number on the current line
 vim.opt.number = true
