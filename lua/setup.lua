@@ -16,12 +16,23 @@ vim.keymap.set('n', '<C-b>', ':Telescope buffers<CR>', { noremap = true, silent 
 
 require('telescope').setup {
 	defaults = {
+		vimgrep_arguments = {
+            'rg',
+            '--color=never',
+            '--no-heading',
+            '--with-filename',
+            '--line-number',
+            '--column',
+            '--smart-case',
+            '--hidden', -- Include hidden files for live_grep
+        },
         file_ignore_patterns = { "node_modules", "%.git/" }, -- Ignore patterns
         prompt_prefix = "🔍 ", -- Customize the prompt icon
     },
     pickers = {
         find_files = {
             theme = "dropdown", -- Compact UI for file finding
+			hidden = true,
         },
     },
 }
