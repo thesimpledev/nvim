@@ -32,6 +32,12 @@ vim.opt.listchars = {
     precedes = "❮",    -- Display lines that wrap to the previous screen
 }
 
+require('plugins')
+require('lsp')
+require('completion')
+require('setup')
+require('additional')
+
 --New Key Mappings
 --Set Leader Key
 vim.g.mapleader = " " -- Set the global leader key to <Space>
@@ -41,30 +47,15 @@ vim.keymap.set('i', '<Space>', '<Space>', { noremap = true, silent = true })
 vim.keymap.set('n', '<Leader>v', ':Vex<CR>', { noremap = true, silent = true })
 vim.keymap.set('n', '<Leader>e', ':Ex<CR>', { noremap = true, silent = true })
 
-require('plugins')
-require('lsp')
-require('completion')
-require('setup')
-
-vim.cmd([[
-  function! CustomVex()
-    rightbelow vsplit
-    Explore
-  endfunction
-  command! Vex call CustomVex()
-]])
+-- LSP Keymaps
+vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { noremap = true, silent = true })
+vim.keymap.set('n', 'gr', vim.lsp.buf.references, { noremap = true, silent = true })
+vim.keymap.set('n', '<F2>', vim.lsp.buf.rename, { noremap = true, silent = true })
 
 
--- Create or get the 'spellcheck' augroup
-local spellcheck_group = vim.api.nvim_create_augroup('spellcheck', { clear = true })
-
--- Define an autocommand for the 'FileType' event
-vim.api.nvim_create_autocmd('FileType', {
-  group = spellcheck_group,
-  pattern = { 'markdown', 'text' },
-  callback = function()
-    vim.opt_local.spell = true
-    vim.opt_local.spelllang = 'en_us'
-  end,
-})
-
+-- Telescope setup
+vim.keymap.set('n', '<C-p>', ':Telescope find_files<CR>', { noremap = true, silent = true })
+vim.keymap.set('n', '<C-f>', ':Telescope live_grep<CR>', { noremap = true, silent = true }) -- Search text in files
+vim.keymap.set('n', '<C-b>', ':Telescope buffers<CR>', { noremap = true, silent = true }) -- List open buffers
+vim.keymap.set('n', '<Leader>ds', ':Telescope lsp_document_symbols<CR>', { noremap = true, silent = true })
+vim.keymap.set('n', '<Leader>ws', ':Telescope lsp_workspace_symbols<CR>', { noremap = true, silent = true })

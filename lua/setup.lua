@@ -9,11 +9,6 @@ require('nvim-autopairs').setup({
 })
 
 
--- Telescope setup
-vim.keymap.set('n', '<C-p>', ':Telescope find_files<CR>', { noremap = true, silent = true })
-vim.keymap.set('n', '<C-f>', ':Telescope live_grep<CR>', { noremap = true, silent = true }) -- Search text in files
-vim.keymap.set('n', '<C-b>', ':Telescope buffers<CR>', { noremap = true, silent = true }) -- List open buffers
-
 require('telescope').setup {
 	defaults = {
 		vimgrep_arguments = {
@@ -39,3 +34,10 @@ require('telescope').setup {
 
 
 vim.cmd('colorscheme monokai')
+
+
+require('nvim-treesitter.configs').setup {
+    autotag = {
+        enable = true,
+    },
+}

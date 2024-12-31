@@ -8,6 +8,7 @@ local servers = {
 			unusedparams = true
 		},
 		experimentalPostfixCompletions = true,
+		experimentalWorkspaceModule = true,
     },                 -- Go
 	rust_analyzer = {
         settings = {
@@ -23,6 +24,9 @@ local servers = {
     }, -- Rust
     ts_ls = {
         settings = {
+			javascript = {
+				inlayHints = { includeInlayParameterNameHints = 'all' },
+			},
             completions = {
                 completeFunctionCalls = true,
             },
@@ -35,12 +39,17 @@ local servers = {
                     pycodestyle = { enabled = true },
                     pyflakes = { enabled = true },
                     pylint = { enabled = false },
+					pylsp_mypy = { enabled = true },
                 },
             },
         },
     }, -- Python
     intelephense = {}, -- PHP
 }
+
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+local cmp_nvim_lsp = require('cmp_nvim_lsp')
+capabilities = cmp_nvim_lsp.default_capabilities(capabilities)
 
 for server, config in pairs(servers) do
     lspconfig[server].setup(config)

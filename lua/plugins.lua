@@ -19,7 +19,7 @@ Plug 'sainnhe/sonokai'
 Plug 'rose-pine/neovim'
 Plug 'jacoborus/tender.vim'
 Plug 'tanvirtin/monokai.nvim'
-
+Plug 'windwp/nvim-ts-autotag'
 
 call plug#end()
 ]]
