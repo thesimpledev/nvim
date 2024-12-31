@@ -100,3 +100,36 @@ vim.api.nvim_create_autocmd("BufWritePre", {
         vim.lsp.buf.format({ async = false })
     end,
 })
+
+--Test to add in live error checking with a debounce of 200ms
+local diagnostic_timer = nil
+
+vim.api.nvim_create_autocmd({ "TextChanged", "TextChangedI" }, {
+    callback = function()
+        if diagnostic_timer then
+            vim.fn.timer_stop(diagnostic_timer)
+        end
+
+        diagnostic_timer = vim.fn.timer_start(200, function()
+            vim.diagnostic.reset(nil, 0)
+            vim.lsp.buf.hover()
+        end)
+    end,
+})
+
+-- Configure diagnostic settings
+vim.diagnostic.config({
+    virtual_text = {
+        prefix = "●",  -- Customize prefix; can be empty to avoid clutter
+        source = "always",  -- Show diagnostic source (e.g., "gopls", "ts_ls")
+    },
+    signs = true,  -- Show signs in the gutter
+    underline = true,  -- Underline diagnostic text
+    update_in_insert = true,  -- diagnostics updates in insert mode
+    severity_sort = true,  -- Sort diagnostics by severity
+    float = {
+        show_header = true,  -- Show header in floating diagnostics
+        source = "always",  -- Show diagnostic source in floating windows
+        border = "rounded",  -- Rounded borders for floating windows
+    },
+})

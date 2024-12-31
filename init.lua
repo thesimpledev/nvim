@@ -32,6 +32,8 @@ vim.opt.listchars = {
     precedes = "❮",    -- Display lines that wrap to the previous screen
 }
 
+vim.o.updatetime = 200
+
 require('plugins')
 require('lsp')
 require('completion')
@@ -45,7 +47,7 @@ vim.g.mapleader = " " -- Set the global leader key to <Space>
 vim.keymap.set('i', '<Space>', '<Space>', { noremap = true, silent = true })
 
 vim.keymap.set('n', '<Leader>v', ':Vex<CR>', { noremap = true, silent = true })
-vim.keymap.set('n', '<Leader>e', ':Ex<CR>', { noremap = true, silent = true })
+vim.keymap.set('n', '<Leader>f', ':Ex<CR>', { noremap = true, silent = true })
 
 -- LSP Keymaps
 vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { noremap = true, silent = true })
@@ -59,3 +61,33 @@ vim.keymap.set('n', '<C-f>', ':Telescope live_grep<CR>', { noremap = true, silen
 vim.keymap.set('n', '<C-b>', ':Telescope buffers<CR>', { noremap = true, silent = true }) -- List open buffers
 vim.keymap.set('n', '<Leader>ds', ':Telescope lsp_document_symbols<CR>', { noremap = true, silent = true })
 vim.keymap.set('n', '<Leader>ws', ':Telescope lsp_workspace_symbols<CR>', { noremap = true, silent = true })
+
+-- Keybindings for diagnostics
+local function goto_next_with_action()
+    vim.diagnostic.goto_next()
+    vim.lsp.buf.code_action()
+end
+
+local function goto_prev_with_action()
+    vim.diagnostic.goto_prev()
+    vim.lsp.buf.code_action()
+end
+vim.keymap.set('n', ']e', goto_next_with_action, { desc = "Go to next diagnostic and suggest fix" })
+vim.keymap.set('n', '[e', goto_prev_with_action, { desc = "Go to previous diagnostic and suggest fix" })
+
+vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = "Show diagnostic in a floating window" })
+vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = "Show diagnostics in location list" })
+
+--Disabled for now I kind of like the letters
+--local signs = { Error = "✘", Warn = "▲", Hint = "⚑", Info = "ℹ" }
+--for type, icon in pairs(signs) do
+--    local hl = "DiagnosticSign" .. type
+ --   vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
+--end
+
+vim.api.nvim_create_autocmd("CursorHold", {
+    callback = function()
+        vim.diagnostic.open_float(nil, { focusable = false })
+    end,
+})
+
