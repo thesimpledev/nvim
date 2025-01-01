@@ -94,5 +94,10 @@ vim.api.nvim_create_autocmd("CursorHold", {
 -- Easy Paste and Copy actions
 
 vim.keymap.set('n', '<Leader>p', '"+p', { noremap = true, silent = true }) --Paste from system clipboard
-vim.keymap.set('n', '<Leader>y', '"+y', { noremap = true, silent = true }) -- copy to system clipboard
+vim.keymap.set('n', '<Leader>y', '"+y', { noremap = true, silent = true }) -- copy to system clipboard normal mode
+vim.keymap.set('v', '<Leader>y', '"+y', { noremap = true, silent = true }) -- copy to system clipboard visual mode
 vim.keymap.set('n', '<Leader>Y', 'gg"+yG', { noremap = true, silent = true }) --Copy entire file to system clipboard
+
+
+vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv", { noremap = true, silent = true }) -- Move selected block down
+vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv", { noremap = true, silent = true }) -- Move selected block up
