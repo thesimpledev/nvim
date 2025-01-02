@@ -1,5 +1,7 @@
+local npairs = require('nvim-autopairs')
 
-require('nvim-autopairs').setup({
+
+npairs.setup({
     enable_check_bracket_line = true, -- Don't add a pair if it exists in the same line
     check_ts = true, -- Use treesitter to handle advanced pair behavior
     disable_filetype = { "TelescopePrompt" }, -- Disable in specific file types
@@ -41,3 +43,22 @@ require('nvim-treesitter.configs').setup {
         enable = true,
     },
 }
+
+local Rule = require('nvim-autopairs.rule')
+
+
+npairs.add_rules({
+  Rule("{", "}")
+    :with_pair(function(opts)
+      -- Only trigger if the text before '{' is empty or whitespace
+      local line_before = opts.line:sub(1, opts.col - 1)
+      return line_before:match("^%s*$") ~= nil
+    end)
+    :with_move(function() return true end)
+    :use_key("{")
+    :replace_endpair(function(_)
+      -- Insert the closing brace two lines down, no extra indentation
+      return "{\n\n}"
+    end)
+    :set_end_pair_length(0),
+})
