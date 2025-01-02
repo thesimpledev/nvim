@@ -44,21 +44,3 @@ require('nvim-treesitter.configs').setup {
     },
 }
 
-local Rule = require('nvim-autopairs.rule')
-
-
-npairs.add_rules({
-  Rule("{", "}")
-    :with_pair(function(opts)
-      -- Only trigger if the text before '{' is empty or whitespace
-      local line_before = opts.line:sub(1, opts.col - 1)
-      return line_before:match("^%s*$") ~= nil
-    end)
-    :with_move(function() return true end)
-    :use_key("{")
-    :replace_endpair(function(_)
-      -- Insert the closing brace two lines down, no extra indentation
-      return "{\n\n}"
-    end)
-    :set_end_pair_length(0),
-})
