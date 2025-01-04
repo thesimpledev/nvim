@@ -78,6 +78,14 @@ vim.keymap.set('n', '[e', goto_prev_with_action, { desc = "Go to previous diagno
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = "Show diagnostic in a floating window" })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = "Show diagnostics in location list" })
 
+vim.keymap.set('n', '<Leader>w', function()
+    for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+        if vim.api.nvim_win_get_config(win).relative ~= '' then
+            vim.api.nvim_win_close(win, false)
+        end
+    end
+end, { noremap = true, silent = true, desc = "Close floating windows" })
+
 --Disabled for now I kind of like the letters
 --local signs = { Error = "✘", Warn = "▲", Hint = "⚑", Info = "ℹ" }
 --for type, icon in pairs(signs) do
