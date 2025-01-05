@@ -13,7 +13,7 @@ vim.keymap.set('i', '<Space>', '<Space>', { noremap = true, silent = true })
 
 -- Lead Key Maps
 vim.keymap.set('n', '<Leader>v', ':Vex<CR>', { noremap = true, silent = true })
-vim.keymap.set('n', '<Leader>f', ':Ex<CR>', { noremap = true, silent = true })
+vim.keymap.set('n', '<Leader>e', ':Ex<CR>', { noremap = true, silent = true })
 vim.keymap.set('n', '<Leader>ds', ':Telescope lsp_document_symbols<CR>', { noremap = true, silent = true })
 vim.keymap.set('n', '<Leader>ws', ':Telescope lsp_workspace_symbols<CR>', { noremap = true, silent = true })
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = "Show diagnostic in a floating window" })
@@ -23,7 +23,7 @@ vim.keymap.set('n', '<Leader>y', '"+y', { noremap = true, silent = true }) -- co
 vim.keymap.set('v', '<Leader>y', '"+y', { noremap = true, silent = true }) -- copy to system clipboard visual mode
 vim.keymap.set('n', '<Leader>Y', 'gg"+yG', { noremap = true, silent = true }) --Copy entire file to system clipboard
 vim.keymap.set('n', '<Leader>b', '<C-^', { noremap = true, silent = true })
-vim.keymap.set('n', '<Leader>d', vim.lsp.buf.definition, { noremap = true, silent = true })
+vim.keymap.set('n', '<Leader>f', vim.lsp.buf.definition, { noremap = true, silent = true })
 vim.keymap.set('n', '<Leader>r', vim.lsp.buf.references, { noremap = true, silent = true })
 vim.keymap.set('n', '<Leader>R', vim.lsp.buf.rename, { noremap = true, silent = true })
 
