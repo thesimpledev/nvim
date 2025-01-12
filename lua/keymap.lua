@@ -22,7 +22,7 @@ vim.keymap.set('n', '<Leader>p', '"+p', { noremap = true, silent = true }) --Pas
 vim.keymap.set('n', '<Leader>y', '"+y', { noremap = true, silent = true }) -- copy to system clipboard normal mode
 vim.keymap.set('v', '<Leader>y', '"+y', { noremap = true, silent = true }) -- copy to system clipboard visual mode
 vim.keymap.set('n', '<Leader>Y', 'gg"+yG', { noremap = true, silent = true }) --Copy entire file to system clipboard
-vim.keymap.set('n', '<Leader>b', '<C-^', { noremap = true, silent = true })
+vim.keymap.set('n', '<Leader>b', '<C-^>', { noremap = true, silent = true })
 vim.keymap.set('n', '<Leader>f', vim.lsp.buf.definition, { noremap = true, silent = true })
 vim.keymap.set('n', '<Leader>r', vim.lsp.buf.references, { noremap = true, silent = true })
 vim.keymap.set('n', '<Leader>R', vim.lsp.buf.rename, { noremap = true, silent = true })
