@@ -75,6 +75,7 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 local diagnostic_timer = nil
 
 vim.api.nvim_create_autocmd({ "TextChanged", "TextChangedI" }, {
+    pattern = "*.go",
     callback = function()
         if diagnostic_timer then
             vim.fn.timer_stop(diagnostic_timer)
