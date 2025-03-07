@@ -40,6 +40,12 @@ vim.keymap.set('n', '[e', goto_prev_with_action, { desc = "Go to previous diagno
 vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv", { noremap = true, silent = true }) -- Move selected block down
 vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv", { noremap = true, silent = true }) -- Move selected block up
 
+vim.keymap.set('n', '<Leader>h', '<C-w>h', { noremap = true, silent = true })
+vim.keymap.set('n', '<Leader>l', '<C-w>l', { noremap = true, silent = true })
+vim.keymap.set('n', '<Leader>k', '<C-w>k', { noremap = true, silent = true })
+vim.keymap.set('n', '<Leader>j', '<C-w>j', { noremap = true, silent = true })
+
+
 vim.keymap.set('n', '<Leader>w', function()
 	for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
 		if vim.api.nvim_win_get_config(win).relative ~= '' then

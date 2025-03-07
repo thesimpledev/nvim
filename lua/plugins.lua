@@ -21,6 +21,15 @@ Plug 'jacoborus/tender.vim'
 Plug 'tanvirtin/monokai.nvim'
 Plug 'windwp/nvim-ts-autotag'
 
+
+
+Plug 'jose-elias-alvarez/nvim-lsp-ts-utils'   
+Plug 'mfussenegger/nvim-dap'                 
+Plug 'mfussenegger/nvim-dap-python'         
+Plug 'ray-x/go.nvim'                       
+Plug 'ray-x/guihua.lua'                   
+
+
 call plug#end()
 ]]
 

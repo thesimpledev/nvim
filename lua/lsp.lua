@@ -1,4 +1,5 @@
 local lspconfig = require('lspconfig')
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 local servers = {
     gopls = {
@@ -10,18 +11,6 @@ local servers = {
 		experimentalPostfixCompletions = true,
 		experimentalWorkspaceModule = true,
     },                 -- Go
-	rust_analyzer = {
-        settings = {
-            ["rust-analyzer"] = {
-                cargo = {
-                    allFeatures = true,
-                },
-                checkOnSave = {
-                    command = "clippy",
-                },
-            },
-        },
-    }, -- Rust
     ts_ls = {
         settings = {
 			javascript = {
@@ -44,14 +33,11 @@ local servers = {
             },
         },
     }, -- Python
-    intelephense = {}, -- PHP
 }
 
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-local cmp_nvim_lsp = require('cmp_nvim_lsp')
-capabilities = cmp_nvim_lsp.default_capabilities(capabilities)
 
 for server, config in pairs(servers) do
+	config.capabilities = capabilities
     lspconfig[server].setup(config)
 end
 
@@ -69,14 +55,6 @@ vim.api.nvim_create_autocmd("BufWritePre", {
     end,
 })
 
--- Rust
-vim.api.nvim_create_autocmd("BufWritePre", {
-    pattern = "*.rs",
-    callback = function()
-        vim.lsp.buf.format({ async = false })
-    end,
-})
-
 -- TypeScript/JavaScript
 vim.api.nvim_create_autocmd("BufWritePre", {
     pattern = { "*.ts", "*.js" },
@@ -88,14 +66,6 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 -- Python
 vim.api.nvim_create_autocmd("BufWritePre", {
     pattern = "*.py",
-    callback = function()
-        vim.lsp.buf.format({ async = false })
-    end,
-})
-
--- PHP
-vim.api.nvim_create_autocmd("BufWritePre", {
-    pattern = "*.php",
     callback = function()
         vim.lsp.buf.format({ async = false })
     end,
