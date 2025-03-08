@@ -1,3 +1,4 @@
+
 local lspconfig = require('lspconfig')
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
@@ -53,8 +54,8 @@ lspconfig.ts_ls.setup {
         javascript = {
             inlayHints = { includeInlayParameterNameHints = 'all' },
             completions = { completeFunctionCalls = true },
+        },
     },
-},
 }
 
 vim.api.nvim_create_autocmd("BufWritePre", {
@@ -76,7 +77,7 @@ lspconfig.pylsp.setup {
                 pylsp_mypy = { enabled = true },
             },
         },
-	},
+    },
 }
 
 vim.api.nvim_create_autocmd("BufWritePre", {
@@ -89,7 +90,14 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 -- CSS, HTML, Angular Configuration
 lspconfig.cssls.setup { capabilities = capabilities }
 lspconfig.html.setup { capabilities = capabilities }
-lspconfig.angularls.setup { capabilities = capabilities }
+lspconfig.angularls.setup {
+    capabilities = capabilities,
+    cmd = {
+        "ngserver",
+        "--stdio",
+    },
+    root_dir = lspconfig.util.root_pattern("angular.json", "project.json"),
+}
 
 vim.api.nvim_create_autocmd("BufWritePre", {
     pattern = {"*.html", "*.css"},
@@ -113,4 +121,3 @@ vim.diagnostic.config({
     update_in_insert = true,
     severity_sort = true,
 })
-
