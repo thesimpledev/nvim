@@ -11,7 +11,6 @@ lspconfig.gopls.setup {
             staticcheck = true,
             analyses = { unusedparams = true },
             experimentalPostfixCompletions = true,
-            experimentalWorkspaceModule = true,
         },
     },
 }
