@@ -29,19 +29,20 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 })
 
 local diagnostic_timer = nil
+
+local diagnostic_timer = nil
 vim.api.nvim_create_autocmd({ "TextChanged", "TextChangedI" }, {
     pattern = "*.go",
     callback = function()
         if diagnostic_timer then
             vim.fn.timer_stop(diagnostic_timer)
         end
-        diagnostic_timer = vim.defer_fn(function()
+        diagnostic_timer = vim.fn.timer_start(200, function()
             vim.diagnostic.reset(nil, 0)
             vim.lsp.buf.hover()
-        end, 200)
+        end)
     end,
 })
-
 -- JavaScript/TypeScript Configuration
 lspconfig.ts_ls.setup {
     capabilities = capabilities,
