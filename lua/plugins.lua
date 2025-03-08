@@ -29,6 +29,14 @@ Plug 'mfussenegger/nvim-dap-python'
 Plug 'ray-x/go.nvim'                       
 Plug 'ray-x/guihua.lua'                   
 
+Plug 'angular/vscode-ng-language-service'
+Plug 'hrsh7th/vscode-langservers-extracted'
+
+
+
+Plug 'windwp/nvim-ts-autotag'        " Auto-close HTML/XML tags
+Plug 'norcalli/nvim-colorizer.lua'  " Color visualization in CSS/HTML
+Plug 'mattn/emmet-vim'              " HTML quick expansion
 
 call plug#end()
 ]]
