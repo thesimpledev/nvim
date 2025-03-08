@@ -38,7 +38,6 @@ vim.api.nvim_create_autocmd({ "TextChanged", "TextChangedI" }, {
             vim.fn.timer_stop(diagnostic_timer)
         end
         diagnostic_timer = vim.fn.timer_start(200, function()
-            vim.diagnostic.reset(nil, 0)
             vim.lsp.buf.hover()
         end)
     end,
