@@ -34,6 +34,9 @@ vim.opt.listchars = {
 
 vim.o.updatetime = 200
 
+vim.cmd('syntax enable')
+vim.cmd('filetype plugin indent on')
+
 require('plugins')
 require('lsp')
 require('completion')
