@@ -38,6 +38,9 @@ Plug 'windwp/nvim-ts-autotag'        " Auto-close HTML/XML tags
 Plug 'norcalli/nvim-colorizer.lua'  " Color visualization in CSS/HTML
 Plug 'mattn/emmet-vim'              " HTML quick expansion
 
+
+Plug 'NoahTheDuke/vim-just'
+
 call plug#end()
 ]]
 
