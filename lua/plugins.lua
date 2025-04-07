@@ -42,7 +42,7 @@ Plug 'mattn/emmet-vim'              " HTML quick expansion
 
 
 Plug 'NoahTheDuke/vim-just'
-
+Plug 'Exafunction/windsurf.vim'
 call plug#end()
 ]]
 

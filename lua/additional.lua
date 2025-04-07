@@ -33,3 +33,6 @@ require'nvim-treesitter.configs'.setup {
         enable = true,
     },
 }
+
+vim.g.windsurf_floating_window = true
+vim.g.windsurf_highlight_duration = 300
