@@ -1,4 +1,3 @@
-
 local lspconfig = require('lspconfig')
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
@@ -28,20 +27,6 @@ vim.api.nvim_create_autocmd("BufWritePre", {
     end,
 })
 
-local diagnostic_timer = nil
-
-local diagnostic_timer = nil
-vim.api.nvim_create_autocmd({ "TextChanged", "TextChangedI" }, {
-    pattern = "*.go",
-    callback = function()
-        if diagnostic_timer then
-            vim.fn.timer_stop(diagnostic_timer)
-        end
-        diagnostic_timer = vim.fn.timer_start(200, function()
-            vim.lsp.buf.hover()
-        end)
-    end,
-})
 -- JavaScript/TypeScript Configuration
 lspconfig.ts_ls.setup {
     capabilities = capabilities,
@@ -117,6 +102,6 @@ vim.diagnostic.config({
         source = "always",
     },
     underline = true,
-    update_in_insert = true,
+    update_in_insert = false,  -- Changed from true to false
     severity_sort = true,
 })
