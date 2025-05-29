@@ -30,7 +30,8 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 -- C# Configuration
 lspconfig.omnisharp.setup {
     capabilities = capabilities,
-    cmd = { "omnisharp", "--languageserver", "--hostPID", tostring(vim.fn.getpid()) },
+    cmd = { "omnisharp", "--languageserver" },  -- Simplified command
+    root_dir = lspconfig.util.root_pattern("*.csproj", "*.sln", ".git"),
     settings = {
         omnisharp = {
             organizeImportsOnFormat = true,
@@ -39,7 +40,6 @@ lspconfig.omnisharp.setup {
         },
     },
 }
-
 vim.api.nvim_create_autocmd("BufWritePre", {
     pattern = "*.cs",
     callback = function()
