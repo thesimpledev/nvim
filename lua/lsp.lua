@@ -27,6 +27,26 @@ vim.api.nvim_create_autocmd("BufWritePre", {
     end,
 })
 
+-- C# Configuration
+lspconfig.omnisharp.setup {
+    capabilities = capabilities,
+    cmd = { "omnisharp", "--languageserver", "--hostPID", tostring(vim.fn.getpid()) },
+    settings = {
+        omnisharp = {
+            organizeImportsOnFormat = true,
+            enableImportCompletion = true,
+            analyzeOpenDocumentsOnly = false,
+        },
+    },
+}
+
+vim.api.nvim_create_autocmd("BufWritePre", {
+    pattern = "*.cs",
+    callback = function()
+        vim.lsp.buf.format({ async = false })
+    end,
+})
+
 -- JavaScript/TypeScript Configuration
 lspconfig.ts_ls.setup {
     capabilities = capabilities,
