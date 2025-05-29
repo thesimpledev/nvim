@@ -47,6 +47,25 @@ vim.api.nvim_create_autocmd("BufWritePre", {
     end,
 })
 
+-- Erlang Configuration
+lspconfig.erlangls.setup {
+    capabilities = capabilities,
+    cmd = { "erlang_ls" },
+    root_dir = lspconfig.util.root_pattern("rebar.config", "erlang.mk", ".git"),
+    settings = {
+        erlangls = {
+            -- Add any specific settings here if needed
+        }
+    }
+}
+
+vim.api.nvim_create_autocmd("BufWritePre", {
+    pattern = {"*.erl", "*.hrl"},
+    callback = function()
+        vim.lsp.buf.format({ async = false })
+    end,
+})
+
 -- JavaScript/TypeScript Configuration
 lspconfig.ts_ls.setup {
     capabilities = capabilities,

@@ -19,3 +19,9 @@ npm install -g @angular/language-server
 
 # Required in the Angular project
 npm install --save-dev @angular/language-service
+
+# Install Erlang language server
+git clone https://github.com/erlang-ls/erlang_ls.git
+cd erlang_ls
+make
+# Make sure erlang_ls is in your PATH
