@@ -30,14 +30,28 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 -- C# Configuration
 lspconfig.omnisharp.setup {
     capabilities = capabilities,
-    cmd = { "omnisharp", "--languageserver" },  -- Simplified command
+    cmd = { 
+        "omnisharp", 
+        "--languageserver",
+        "--stdio"
+    },
     root_dir = lspconfig.util.root_pattern("*.csproj", "*.sln", ".git"),
     settings = {
-        omnisharp = {
-            organizeImportsOnFormat = true,
-            enableImportCompletion = true,
-            analyzeOpenDocumentsOnly = false,
+        FormattingOptions = {
+            EnableEditorConfigSupport = true,
+            OrganizeImports = true,
         },
+        RoslynExtensionsOptions = {
+            EnableAnalyzersSupport = true,
+            EnableImportCompletion = true,
+        },
+    },
+    on_attach = function(client, bufnr)
+        -- Disable some features that can cause issues
+        client.server_capabilities.semanticTokensProvider = nil
+    end,
+    flags = {
+        debounce_text_changes = 150,
     },
 }
 vim.api.nvim_create_autocmd("BufWritePre", {
