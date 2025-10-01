@@ -4,6 +4,7 @@ local capabilities = require('cmp_nvim_lsp').default_capabilities()
 -- Go Configuration
 lspconfig.gopls.setup {
     capabilities = capabilities,
+	root_dir = require('lspconfig.util').root_pattern("go.mod", ".git"),
     settings = {
         gopls = {
             gofumpt = true,

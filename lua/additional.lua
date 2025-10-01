@@ -28,12 +28,13 @@ vim.g.loaded_perl_provider = 0
 -- Disable Ruby provider
 vim.g.loaded_ruby_provider = 0
 
-require'nvim-treesitter.configs'.setup {
-    highlight = {
-        enable = true,
-    },
-}
-vim.g.netrw_banner = 0
 
+require('nvim-treesitter.configs').setup {
+    ensure_installed = { "go", "lua", "python", "javascript", "typescript", "html", "css" }, -- add the languages you use
+    highlight = { enable = true },
+    indent    = { enable = true },
+    autotag   = { enable = true },
+    fold      = { enable = true },
+}
 -- vim.g.windsurf_floating_window = true
 -- vim.g.windsurf_highlight_duration = 300
