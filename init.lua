@@ -23,6 +23,8 @@ vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4 
 vim.opt.smartindent = true
 
+vim.opt.mouse = ''
+
 vim.opt.list = true -- Enable the display of whitespace characters
 vim.opt.scrolloff=8
 vim.opt.listchars = {
