@@ -159,3 +159,14 @@ vim.diagnostic.config({
     update_in_insert = false,  -- Changed from true to false
     severity_sort = true,
 })
+
+
+-- Auto-run Go tests on save
+local gotest = require('gotest')
+
+vim.api.nvim_create_autocmd("BufWritePost", {
+    pattern = "*.go",
+    callback = function()
+        gotest.run_tests_for_file()
+    end,
+})
