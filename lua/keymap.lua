@@ -21,6 +21,7 @@ vim.keymap.set('n', '<Leader>R', vim.lsp.buf.rename, { noremap = true, silent = 
 vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { noremap = true, silent = true })
 vim.keymap.set('n', 'gr', vim.lsp.buf.references, { noremap = true, silent = true })
 vim.keymap.set('n', '<F2>', vim.lsp.buf.rename, { noremap = true, silent = true })
+vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, { noremap = true, silent = true })
 -- Telescope setup
 vim.keymap.set('n', '<C-p>', ':Telescope find_files<CR>', { noremap = true, silent = true })
 vim.keymap.set('n', '<C-f>', ':Telescope live_grep<CR>', { noremap = true, silent = true }) -- Search text in files
