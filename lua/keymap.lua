@@ -26,8 +26,8 @@ vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, { noremap = true, silen
 vim.keymap.set('n', '<C-p>', ':Telescope find_files<CR>', { noremap = true, silent = true })
 vim.keymap.set('n', '<C-f>', ':Telescope live_grep<CR>', { noremap = true, silent = true }) -- Search text in files
 vim.keymap.set('n', '<C-b>', ':Telescope buffers<CR>', { noremap = true, silent = true }) -- List open buffers
-vim.keymap.set('n', ']e', vim.diagnostic.goto_next, { desc = "Go to next diagnostic and suggest fix" })
-vim.keymap.set('n', '[e', vim.diagnostic.goto_prev, { desc = "Go to previous diagnostic and suggest fix" })
+--vim.keymap.set('n', ']e', vim.diagnostic.goto_next, { desc = "Go to next diagnostic and suggest fix" })
+--vim.keymap.set('n', '[e', vim.diagnostic.goto_prev, { desc = "Go to previous diagnostic and suggest fix" })
 vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv", { noremap = true, silent = true }) -- Move selected block down
 vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv", { noremap = true, silent = true }) -- Move selected block up
 
