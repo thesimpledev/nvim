@@ -35,7 +35,7 @@ vim.keymap.set('n', '<Leader>h', '<C-w>h', { noremap = true, silent = true })
 vim.keymap.set('n', '<Leader>l', '<C-w>l', { noremap = true, silent = true })
 vim.keymap.set('n', '<Leader>k', '<C-w>k', { noremap = true, silent = true })
 vim.keymap.set('n', '<Leader>j', '<C-w>j', { noremap = true, silent = true })
-
+vim.keymap.set('n', '<Leader><CR>', ':nohlsearch<CR>', { noremap = true, silent = true })
 
 vim.keymap.set('n', '<Leader>w', function()
 	for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
