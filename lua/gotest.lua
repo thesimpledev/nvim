@@ -63,7 +63,7 @@ function M.run_tests_for_file()
     
     local output = {}
     -- Test the entire package directory instead of individual files
-    local test_cmd = {"go", "test", "-v", "."}
+    local test_cmd = {"go", "test", "-tags=exclude_tests", "-v", "."}
     
     -- Start the test job
     test_jobs[file] = vim.fn.jobstart(test_cmd, {
