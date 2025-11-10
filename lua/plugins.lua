@@ -1,6 +1,7 @@
 vim.cmd [[
 call plug#begin('~/.config/nvim/plugged')
 
+Plug 'williamboman/mason.nvim'
 Plug 'neovim/nvim-lspconfig'       " Configures LSP servers
 Plug 'hrsh7th/nvim-cmp'            " Completion plugin
 Plug 'hrsh7th/cmp-nvim-lsp'        " LSP completion source
@@ -42,6 +43,10 @@ Plug 'mattn/emmet-vim'              " HTML quick expansion
 
 
 Plug 'NoahTheDuke/vim-just'
+
+Plug 'williamboman/mason-lspconfig.nvim'
+Plug('rcarriga/nvim-dap-ui')
+Plug('nvim-neotest/nvim-nio')
 call plug#end()
 ]]
 

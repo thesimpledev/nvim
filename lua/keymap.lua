@@ -6,7 +6,7 @@ vim.keymap.set('n', '<Leader>v', ':Vex<CR>', { noremap = true, silent = true })
 vim.keymap.set('n', '<Leader>e', ':Ex<CR>', { noremap = true, silent = true })
 vim.keymap.set('n', '<Leader>ds', ':Telescope lsp_document_symbols<CR>', { noremap = true, silent = true })
 vim.keymap.set('n', '<Leader>ws', ':Telescope lsp_workspace_symbols<CR>', { noremap = true, silent = true })
-vim.keymap.set('n', '<leader>d', vim.diagnostic.open_float, { desc = "Show diagnostic in a floating window" })
+vim.keymap.set('n', '<leader>dd', vim.diagnostic.open_float, { desc = "Show diagnostic in a floating window" })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = "Show diagnostics in location list" })
 vim.keymap.set('n', '<Leader>p', '"+p', { noremap = true, silent = true }) --Paste from system clipboard
 vim.keymap.set('n', '<Leader>y', '"+y', { noremap = true, silent = true }) -- copy to system clipboard normal mode

@@ -1,27 +1,15 @@
+# Neovim Setup
 
-# Install Go language server
-go install golang.org/x/tools/gopls@latest
+Download the latest Neovim release from the official Neovim GitHub page. Do not use apt because that version is outdated.
 
-# Install JavaScript/TypeScript language server
-npm install -g typescript typescript-language-server
+Open Neovim and run:
 
-# Install Python language server
-pip install 'python-lsp-server[all]'
+:PlugInstall
 
-# Install CSS language server
-npm install -g vscode-langservers-extracted
+Restart Neovim. Mason will automatically install all configured language servers on first launch based on your mason-setup.lua.
 
-# Install HTML language server
-npm install -g vscode-langservers-extracted
+## Userful health commands
+:LspInfo
+:checkhealth lsp
+:checkhealth mason
 
-# Install Angular language server
-npm install -g @angular/language-server
-
-# Required in the Angular project
-npm install --save-dev @angular/language-service
-
-# Install Erlang language server
-git clone https://github.com/erlang-ls/erlang_ls.git
-cd erlang_ls
-make
-# Make sure erlang_ls is in your PATH
