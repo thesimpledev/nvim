@@ -11,6 +11,7 @@ lspconfig.gopls.setup {
             staticcheck = true,
             analyses = { unusedparams = true },
             experimentalPostfixCompletions = true,
+			buildFlags = {"-tags=exclude_tests"},
         },
     },
 }
