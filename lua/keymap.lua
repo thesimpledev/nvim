@@ -37,6 +37,8 @@ vim.keymap.set('n', '<Leader>k', '<C-w>k', { noremap = true, silent = true })
 vim.keymap.set('n', '<Leader>j', '<C-w>j', { noremap = true, silent = true })
 vim.keymap.set('n', '<Leader><CR>', ':nohlsearch<CR>', { noremap = true, silent = true })
 
+vim.keymap.set('n', '<Leader>gd', ':Gdiff<CR>', { noremap = true, silent = true, desc = "Git diff" })
+
 vim.keymap.set('n', '<Leader>w', function()
 	for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
 		if vim.api.nvim_win_get_config(win).relative ~= '' then

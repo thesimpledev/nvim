@@ -47,6 +47,7 @@ Plug 'NoahTheDuke/vim-just'
 Plug 'williamboman/mason-lspconfig.nvim'
 Plug('rcarriga/nvim-dap-ui')
 Plug('nvim-neotest/nvim-nio')
+Plug 'tpope/vim-fugitive'
 call plug#end()
 ]]
 
