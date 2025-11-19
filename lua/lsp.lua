@@ -171,3 +171,27 @@ vim.api.nvim_create_autocmd("BufWritePost", {
         gotest.run_tests_for_file()
     end,
 })
+
+
+-- C/C++ Configuration
+lspconfig.clangd.setup {
+    capabilities = capabilities,
+    cmd = {
+        "clangd",
+        "--background-index",
+        "--clang-tidy",
+        "--header-insertion=iwyu",
+        "--completion-style=detailed",
+        "--function-arg-placeholders",
+    },
+    init_options = {
+        clangdFileStatus = true,
+    },
+}
+
+vim.api.nvim_create_autocmd("BufWritePre", {
+    pattern = {"*.c", "*.h", "*.cpp", "*.hpp"},
+    callback = function()
+        vim.lsp.buf.format({ async = false })
+    end,
+})

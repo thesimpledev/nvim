@@ -10,6 +10,7 @@ require('mason-lspconfig').setup({
         'angularls',       -- Angular
         'omnisharp',       -- C#
         'erlangls',        -- Erlang
+		'clangd',		   -- C
     },
     automatic_installation = true,
 	automatic_setup = false,
