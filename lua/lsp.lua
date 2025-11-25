@@ -1,20 +1,21 @@
-local lspconfig = require('lspconfig')
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 -- Go Configuration
-lspconfig.gopls.setup {
+vim.lsp.config('gopls', {
     capabilities = capabilities,
-	root_dir = require('lspconfig.util').root_pattern("go.mod", ".git"),
+    root_dir = vim.fs.root(0, {"go.mod", ".git"}),
     settings = {
         gopls = {
             gofumpt = true,
             staticcheck = true,
             analyses = { unusedparams = true },
             experimentalPostfixCompletions = true,
-			buildFlags = {"-tags=exclude_tests"},
+            buildFlags = {"-tags=exclude_tests"},
         },
     },
-}
+})
+
+vim.lsp.enable('gopls')
 
 vim.api.nvim_create_autocmd("BufWritePre", {
     pattern = "*.go",
@@ -30,14 +31,14 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 })
 
 -- C# Configuration
-lspconfig.omnisharp.setup {
+vim.lsp.config('omnisharp', {
     capabilities = capabilities,
     cmd = { 
         "omnisharp", 
         "--languageserver",
         "--stdio"
     },
-    root_dir = lspconfig.util.root_pattern("*.csproj", "*.sln", ".git"),
+    root_dir = vim.fs.root(0, {"*.csproj", "*.sln", ".git"}),
     settings = {
         FormattingOptions = {
             EnableEditorConfigSupport = true,
@@ -49,13 +50,15 @@ lspconfig.omnisharp.setup {
         },
     },
     on_attach = function(client, bufnr)
-        -- Disable some features that can cause issues
         client.server_capabilities.semanticTokensProvider = nil
     end,
     flags = {
         debounce_text_changes = 150,
     },
-}
+})
+
+vim.lsp.enable('omnisharp')
+
 vim.api.nvim_create_autocmd("BufWritePre", {
     pattern = "*.cs",
     callback = function()
@@ -64,16 +67,16 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 })
 
 -- Erlang Configuration
-lspconfig.erlangls.setup {
+vim.lsp.config('erlangls', {
     capabilities = capabilities,
     cmd = { "erlang_ls" },
-    root_dir = lspconfig.util.root_pattern("rebar.config", "erlang.mk", ".git"),
+    root_dir = vim.fs.root(0, {"rebar.config", "erlang.mk", ".git"}),
     settings = {
-        erlangls = {
-            -- Add any specific settings here if needed
-        }
+        erlangls = {}
     }
-}
+})
+
+vim.lsp.enable('erlangls')
 
 vim.api.nvim_create_autocmd("BufWritePre", {
     pattern = {"*.erl", "*.hrl"},
@@ -83,7 +86,7 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 })
 
 -- JavaScript/TypeScript Configuration
-lspconfig.ts_ls.setup {
+vim.lsp.config('ts_ls', {
     capabilities = capabilities,
     on_attach = function(client, bufnr)
         require('nvim-lsp-ts-utils').setup {}
@@ -95,7 +98,9 @@ lspconfig.ts_ls.setup {
             completions = { completeFunctionCalls = true },
         },
     },
-}
+})
+
+vim.lsp.enable('ts_ls')
 
 vim.api.nvim_create_autocmd("BufWritePre", {
     pattern = {"*.js", "*.ts", "*.jsx", "*.tsx"},
@@ -105,7 +110,7 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 })
 
 -- Python Configuration
-lspconfig.pylsp.setup {
+vim.lsp.config('pylsp', {
     capabilities = capabilities,
     settings = {
         pylsp = {
@@ -117,7 +122,9 @@ lspconfig.pylsp.setup {
             },
         },
     },
-}
+})
+
+vim.lsp.enable('pylsp')
 
 vim.api.nvim_create_autocmd("BufWritePre", {
     pattern = "*.py",
@@ -126,20 +133,59 @@ vim.api.nvim_create_autocmd("BufWritePre", {
     end,
 })
 
--- CSS, HTML, Angular Configuration
-lspconfig.cssls.setup { capabilities = capabilities }
-lspconfig.html.setup { capabilities = capabilities }
-lspconfig.angularls.setup {
+-- CSS Configuration
+vim.lsp.config('cssls', {
+    capabilities = capabilities
+})
+
+vim.lsp.enable('cssls')
+
+-- HTML Configuration
+vim.lsp.config('html', {
+    capabilities = capabilities
+})
+
+vim.lsp.enable('html')
+
+-- Angular Configuration
+vim.lsp.config('angularls', {
     capabilities = capabilities,
     cmd = {
         "ngserver",
         "--stdio",
     },
-    root_dir = lspconfig.util.root_pattern("angular.json", "project.json"),
-}
+    root_dir = vim.fs.root(0, {"angular.json", "project.json"}),
+})
+
+vim.lsp.enable('angularls')
 
 vim.api.nvim_create_autocmd("BufWritePre", {
     pattern = {"*.html", "*.css"},
+    callback = function()
+        vim.lsp.buf.format({ async = false })
+    end,
+})
+
+-- C/C++ Configuration
+vim.lsp.config('clangd', {
+    capabilities = capabilities,
+    cmd = {
+        "clangd",
+        "--background-index",
+        "--clang-tidy",
+        "--header-insertion=iwyu",
+        "--completion-style=detailed",
+        "--function-arg-placeholders",
+    },
+    init_options = {
+        clangdFileStatus = true,
+    },
+})
+
+vim.lsp.enable('clangd')
+
+vim.api.nvim_create_autocmd("BufWritePre", {
+    pattern = {"*.c", "*.h", "*.cpp", "*.hpp"},
     callback = function()
         vim.lsp.buf.format({ async = false })
     end,
@@ -157,10 +203,9 @@ vim.diagnostic.config({
         source = "always",
     },
     underline = true,
-    update_in_insert = false,  -- Changed from true to false
+    update_in_insert = false,
     severity_sort = true,
 })
-
 
 -- Auto-run Go tests on save
 local gotest = require('gotest')
@@ -169,29 +214,5 @@ vim.api.nvim_create_autocmd("BufWritePost", {
     pattern = "*.go",
     callback = function()
         gotest.run_tests_for_file()
-    end,
-})
-
-
--- C/C++ Configuration
-lspconfig.clangd.setup {
-    capabilities = capabilities,
-    cmd = {
-        "clangd",
-        "--background-index",
-        "--clang-tidy",
-        "--header-insertion=iwyu",
-        "--completion-style=detailed",
-        "--function-arg-placeholders",
-    },
-    init_options = {
-        clangdFileStatus = true,
-    },
-}
-
-vim.api.nvim_create_autocmd("BufWritePre", {
-    pattern = {"*.c", "*.h", "*.cpp", "*.hpp"},
-    callback = function()
-        vim.lsp.buf.format({ async = false })
     end,
 })
