@@ -52,7 +52,10 @@ vim.keymap.set('n', '<leader>dB', function() dap.set_breakpoint(vim.fn.input('Br
 vim.keymap.set('n', '<leader>dr', dap.repl.open, { desc = 'Debug REPL' })
 vim.keymap.set('n', '<leader>dl', dap.run_last,  { desc = 'Run Last' })
 vim.keymap.set('n', '<leader>dt', dap.terminate, { desc = 'Terminate' })
-
+vim.keymap.set('n', '<F9>', dap.toggle_breakpoint, { desc = 'Toggle Breakpoint' })
+vim.keymap.set('n', '<F10>', dap.step_over, { desc = 'Step Over' })
+vim.keymap.set('n', '<F11>', dap.step_into, { desc = 'Step Into' })
+vim.keymap.set('n', '<S-F11>', dap.step_out, { desc = 'Step Out' })
 vim.fn.sign_define('DapBreakpoint', { text = '●', texthl = '', linehl = '', numhl = '' })
 vim.fn.sign_define('DapBreakpointCondition', { text = '◆', texthl = '', linehl = '', numhl = '' })
 vim.fn.sign_define('DapStopped', { text = '▶', texthl = '', linehl = '', numhl = '' })
