@@ -30,7 +30,7 @@ vim.g.loaded_ruby_provider = 0
 
 
 require('nvim-treesitter.configs').setup {
-    ensure_installed = { "go", "lua", "python", "javascript", "typescript", "html", "css" }, -- add the languages you use
+    ensure_installed = { "go", "lua", "python", "javascript", "typescript", "html", "css", "zig" }, -- add the languages you use
     highlight = { enable = true },
     indent    = { enable = true },
     autotag   = { enable = true },

@@ -6,6 +6,7 @@ require('mason-lspconfig').setup({
         'ts_ls',           -- JavaScript/TypeScript
         'cssls',           -- CSS
         'html',            -- HTML
+        'zls',             -- Zig
     },
     automatic_installation = true,
 	automatic_setup = false,

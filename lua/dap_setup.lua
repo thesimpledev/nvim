@@ -42,6 +42,58 @@ dap.configurations.typescript = {
   { type = 'pwa-node', request = 'launch', name = 'Launch TS (built)', program = '${file}', cwd = '${workspaceFolder}', outFiles = { '${workspaceFolder}/dist/**/*.js' } },
 }
 
+-- Zig Configuration (using LLDB)
+dap.adapters.lldb = {
+    type = 'executable',
+    command = 'lldb-vscode',  -- or 'lldb-dap' on newer LLDB versions
+    name = 'lldb'
+}
+
+dap.configurations.zig = {
+    {
+        name = 'Launch Zig executable',
+        type = 'lldb',
+        request = 'launch',
+        program = function()
+            -- Look for executable in zig-out/bin/ directory (standard Zig build output)
+            local cwd = vim.fn.getcwd()
+            local default_path = cwd .. '/zig-out/bin/'
+
+            -- Try to find the most recently built executable
+            local handle = io.popen('ls -t ' .. default_path .. ' 2>/dev/null | head -n 1')
+            local result = handle:read("*a")
+            handle:close()
+
+            local default_exe = default_path .. vim.trim(result)
+
+            return vim.fn.input('Path to executable: ', default_exe, 'file')
+        end,
+        cwd = '${workspaceFolder}',
+        stopOnEntry = false,
+        args = {},
+        runInTerminal = false,
+    },
+    {
+        name = 'Launch Zig test',
+        type = 'lldb',
+        request = 'launch',
+        program = function()
+            -- Zig test executables are typically in zig-cache
+            return vim.fn.input('Path to test executable: ', '${workspaceFolder}/zig-cache/', 'file')
+        end,
+        cwd = '${workspaceFolder}',
+        stopOnEntry = false,
+        args = {},
+    },
+    {
+        name = 'Attach to process',
+        type = 'lldb',
+        request = 'attach',
+        pid = require('dap.utils').pick_process,
+        args = {},
+    },
+}
+
 vim.keymap.set('n', '<F5>', dap.continue, { desc = 'Debug Continue' })
 vim.keymap.set('n', '<leader>dc', dap.continue,  { desc = 'Debug Continue' })
 vim.keymap.set('n', '<leader>do', dap.step_over, { desc = 'Debug Step Over' })

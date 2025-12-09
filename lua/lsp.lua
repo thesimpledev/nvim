@@ -191,6 +191,32 @@ vim.api.nvim_create_autocmd("BufWritePre", {
     end,
 })
 
+-- Zig Configuration
+vim.lsp.config('zls', {
+    capabilities = capabilities,
+    root_dir = vim.fs.root(0, {"build.zig", "build.zig.zon", ".git"}),
+    settings = {
+        zls = {
+            enable_autofix = true,
+            enable_snippets = true,
+            enable_inlay_hints = true,
+            warn_style = true,
+            highlight_global_var_declarations = true,
+            enable_build_on_save = false,
+            enable_semantic_tokens = true,
+        },
+    },
+})
+
+vim.lsp.enable('zls')
+
+vim.api.nvim_create_autocmd("BufWritePre", {
+    pattern = "*.zig",
+    callback = function()
+        vim.lsp.buf.format({ async = false })
+    end,
+})
+
 -- Diagnostic Configuration
 vim.diagnostic.config({
     virtual_text = {
