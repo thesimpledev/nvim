@@ -10,7 +10,7 @@ vim.opt.clipboard = 'unnamedplus'
 vim.opt.splitright = true
 vim.opt.splitbelow = true
 
-vim.opt.termguicolors = false 
+vim.opt.termguicolors = true 
 
 vim.opt.cursorline = true
 

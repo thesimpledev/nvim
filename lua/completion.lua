@@ -11,9 +11,14 @@ cmp.setup {
 mapping = cmp.mapping.preset.insert({
 ['<Tab>'] = cmp.mapping(function(fallback)
     if cmp.visible() then
-		cmp.confirm({ select = true, behavior = cmp.ConfirmBehavior.Replace })
+        cmp.confirm({ select = true, behavior = cmp.ConfirmBehavior.Replace })
+    elseif vim.fn['vsnip#jumpable'](1) == 1 then
+        vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<Plug>(vsnip-jump-next)', true, true, true), '')
     else
-        fallback()
+        local tabout = require('tabout')
+        if not tabout.tabout() then
+            fallback()
+        end
     end
 end, { 'i', 's' }),
     ['<C-n>'] = cmp.mapping.select_next_item(),

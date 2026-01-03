@@ -3,6 +3,7 @@ call plug#begin('~/.config/nvim/plugged')
 
 Plug 'williamboman/mason.nvim'
 Plug 'neovim/nvim-lspconfig'       " Configures LSP servers
+Plug 'j-hui/fidget.nvim'           " LSP progress notifications
 Plug 'hrsh7th/nvim-cmp'            " Completion plugin
 Plug 'hrsh7th/cmp-nvim-lsp'        " LSP completion source
 Plug 'hrsh7th/cmp-buffer'          " Buffer completion source
@@ -14,6 +15,10 @@ Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'} " Better syntax high
 Plug 'nvim-lua/plenary.nvim'       " Required by some plugins
 Plug 'nvim-telescope/telescope.nvim' " Fuzzy finder
 Plug 'windwp/nvim-autopairs'       " Autopairs for brackets and braces
+Plug 'abecodes/tabout.nvim'        " Tab out of brackets, quotes, etc.
+Plug 'echasnovski/mini.surround'   " Add/delete/replace surroundings
+Plug 'folke/flash.nvim'            " Jump navigation with labels
+Plug 'numToStr/Comment.nvim'       " Smart code commenting
 Plug 'wakatime/vim-wakatime'
 Plug 'morhetz/gruvbox'
 Plug 'sainnhe/everforest'

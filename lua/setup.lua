@@ -1,6 +1,5 @@
 local npairs = require('nvim-autopairs')
 
-
 npairs.setup({
     enable_check_bracket_line = true, -- Don't add a pair if it exists in the same line
     check_ts = true, -- Use treesitter to handle advanced pair behavior
@@ -10,6 +9,36 @@ npairs.setup({
     map_c_h = true, -- Skip over closing braces when typing
 })
 
+require('tabout').setup({
+    tabkey = '',            -- Disable default Tab mapping (we handle it in cmp)
+    backwards_tabkey = '',  -- Disable default Shift-Tab mapping
+    completion = false,     -- We integrate with cmp manually
+    tabouts = {
+        { open = "'", close = "'" },
+        { open = '"', close = '"' },
+        { open = '`', close = '`' },
+        { open = '(', close = ')' },
+        { open = '[', close = ']' },
+        { open = '{', close = '}' },
+        { open = '<', close = '>' },
+    },
+    ignore_beginning = true,
+    exclude = {},
+})
+
+require('mini.surround').setup()
+
+require('flash').setup({
+    modes = {
+        char = {
+            enabled = false,  -- Don't override f/t/F/T
+        },
+    },
+})
+
+require('colorizer').setup()
+
+require('Comment').setup()
 
 require('telescope').setup {
 	defaults = {
@@ -48,4 +77,13 @@ require('nvim-treesitter.configs').setup {
 vim.opt.foldmethod = "expr"
 vim.opt.foldexpr   = "nvim_treesitter#foldexpr()"
 vim.opt.foldlevel  = 99  -- open all folds by default
+
+require('fidget').setup({
+    notification = {
+        window = {
+            winblend = 0,  -- Background transparency (0 = opaque)
+        },
+    },
+})
+
 require('claudecode').setup()
