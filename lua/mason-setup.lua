@@ -8,6 +8,7 @@ require('mason-lspconfig').setup({
         'html',            -- HTML
         'zls',             -- Zig
         'elixirls',        -- Elixir
+        'ocamllsp',        -- OCaml
     },
     automatic_installation = true,
 	automatic_setup = false,

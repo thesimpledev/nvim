@@ -237,6 +237,24 @@ vim.api.nvim_create_autocmd("BufWritePre", {
     end,
 })
 
+-- OCaml Configuration
+vim.lsp.config('ocamllsp', {
+    capabilities = capabilities,
+    root_dir = vim.fs.root(0, {"dune-project", "dune-workspace", ".opam", ".git"}),
+    settings = {
+        codelens = { enable = true },
+    },
+})
+
+vim.lsp.enable('ocamllsp')
+
+vim.api.nvim_create_autocmd("BufWritePre", {
+    pattern = {"*.ml", "*.mli"},
+    callback = function()
+        vim.lsp.buf.format({ async = false })
+    end,
+})
+
 -- Diagnostic Configuration
 vim.diagnostic.config({
     virtual_text = {
