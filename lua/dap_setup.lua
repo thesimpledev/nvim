@@ -22,6 +22,14 @@ dap.configurations.go = {
         return { '-test.run', test_name }
     end,
  },
+	{
+    type = 'go',
+    name = 'Attach remote',
+    request = 'attach',
+    mode = 'remote',
+    host = '127.0.0.1',
+    port = '2345',
+},
 }
 
 dap.adapters['pwa-node'] = {

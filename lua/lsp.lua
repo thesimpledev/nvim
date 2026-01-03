@@ -85,6 +85,30 @@ vim.api.nvim_create_autocmd("BufWritePre", {
     end,
 })
 
+-- Elixir Configuration
+vim.lsp.config('elixirls', {
+    capabilities = capabilities,
+    cmd = { "elixir-ls" },
+    root_dir = vim.fs.root(0, {"mix.exs", ".git"}),
+    settings = {
+        elixirLS = {
+            dialyzerEnabled = true,
+            fetchDeps = false,
+            enableTestLenses = true,
+            suggestSpecs = true,
+        },
+    },
+})
+
+vim.lsp.enable('elixirls')
+
+vim.api.nvim_create_autocmd("BufWritePre", {
+    pattern = {"*.ex", "*.exs", "*.heex"},
+    callback = function()
+        vim.lsp.buf.format({ async = false })
+    end,
+})
+
 -- JavaScript/TypeScript Configuration
 vim.lsp.config('ts_ls', {
     capabilities = capabilities,

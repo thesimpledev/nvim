@@ -7,6 +7,7 @@ require('mason-lspconfig').setup({
         'cssls',           -- CSS
         'html',            -- HTML
         'zls',             -- Zig
+        'elixirls',        -- Elixir
     },
     automatic_installation = true,
 	automatic_setup = false,
