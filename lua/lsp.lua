@@ -112,10 +112,6 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 -- JavaScript/TypeScript Configuration
 vim.lsp.config('ts_ls', {
     capabilities = capabilities,
-    on_attach = function(client, bufnr)
-        require('nvim-lsp-ts-utils').setup {}
-        require('nvim-lsp-ts-utils').setup_client(client)
-    end,
     settings = {
         javascript = {
             inlayHints = { includeInlayParameterNameHints = 'all' },
