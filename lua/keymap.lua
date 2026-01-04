@@ -1,4 +1,3 @@
-vim.g.mapleader = " " -- Set the global leader key to <Space>
 vim.keymap.set('i', '<Space>', '<Space>', { noremap = true, silent = true })
 
 -- Lead Key Maps
