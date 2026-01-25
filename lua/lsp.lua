@@ -255,6 +255,22 @@ vim.api.nvim_create_autocmd("BufWritePre", {
     end,
 })
 
+-- GDScript Configuration (Godot 4)
+vim.lsp.config('gdscript', {
+    capabilities = capabilities,
+    cmd = { "ncat", "localhost", "6005" },
+    root_dir = vim.fs.root(0, {"project.godot", ".git"}),
+})
+
+vim.lsp.enable('gdscript')
+
+vim.api.nvim_create_autocmd("BufWritePre", {
+    pattern = "*.gd",
+    callback = function()
+        vim.lsp.buf.format({ async = false })
+    end,
+})
+
 -- Diagnostic Configuration
 vim.diagnostic.config({
     virtual_text = {

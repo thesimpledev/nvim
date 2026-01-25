@@ -67,15 +67,10 @@ require('telescope').setup {
 vim.cmd('colorscheme monokai')
 
 
-require('nvim-treesitter.configs').setup {
-    autotag = {
-        enable = true,
-    },
-}
-
+require('nvim-ts-autotag').setup()
 
 vim.opt.foldmethod = "expr"
-vim.opt.foldexpr   = "nvim_treesitter#foldexpr()"
+vim.opt.foldexpr   = "v:lua.vim.treesitter.foldexpr()"
 vim.opt.foldlevel  = 99  -- open all folds by default
 
 require('fidget').setup({
@@ -87,3 +82,5 @@ require('fidget').setup({
 })
 
 require('claudecode').setup()
+
+require('godotdev').setup({})

@@ -37,6 +37,7 @@ Plug('rcarriga/nvim-dap-ui')
 Plug('nvim-neotest/nvim-nio')
 Plug 'tpope/vim-fugitive'
 Plug 'coder/claudecode.nvim'
+Plug 'Mathijs-Bakker/godotdev.nvim' " Godot 4 development tools
 call plug#end()
 ]]
 

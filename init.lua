@@ -1,5 +1,10 @@
 vim.g.mapleader = " "
 
+-- Godot editor integration pipe
+local godot_pipe = "/tmp/godot.pipe"
+vim.fn.delete(godot_pipe)
+vim.fn.serverstart(godot_pipe)
+
 -- Set relative line numbers
 vim.opt.relativenumber = true
 
