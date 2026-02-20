@@ -238,22 +238,22 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 })
 
 -- OCaml Configuration
-vim.lsp.config('ocamllsp', {
-    capabilities = capabilities,
-    root_dir = vim.fs.root(0, {"dune-project", "dune-workspace", ".opam", ".git"}),
-    settings = {
-        codelens = { enable = true },
-    },
-})
-
-vim.lsp.enable('ocamllsp')
-
-vim.api.nvim_create_autocmd("BufWritePre", {
-    pattern = {"*.ml", "*.mli"},
-    callback = function()
-        vim.lsp.buf.format({ async = false })
-    end,
-})
+-- vim.lsp.config('ocamllsp', {
+--     capabilities = capabilities,
+--     root_dir = vim.fs.root(0, {"dune-project", "dune-workspace", ".opam", ".git"}),
+--     settings = {
+--         codelens = { enable = true },
+--     },
+-- })
+--
+-- vim.lsp.enable('ocamllsp')
+--
+-- vim.api.nvim_create_autocmd("BufWritePre", {
+--     pattern = {"*.ml", "*.mli"},
+--     callback = function()
+--         vim.lsp.buf.format({ async = false })
+--     end,
+-- })
 
 -- GDScript Configuration (Godot 4)
 vim.lsp.config('gdscript', {
@@ -266,6 +266,52 @@ vim.lsp.enable('gdscript')
 
 vim.api.nvim_create_autocmd("BufWritePre", {
     pattern = "*.gd",
+    callback = function()
+        vim.lsp.buf.format({ async = false })
+    end,
+})
+
+-- Lua Configuration (LÖVE / Love2D + Neovim)
+local function start_lua_ls()
+    vim.lsp.start({
+        name = "lua_ls",
+        cmd = { "/home/thesimpledev/.local/share/nvim/mason/bin/lua-language-server" },
+        root_dir = vim.fs.root(0, {".luarc.json", ".luarc.jsonc", ".git"}) or vim.fn.getcwd(),
+        capabilities = capabilities,
+        settings = {
+            Lua = {
+                runtime = {
+                    version = "LuaJIT",
+                },
+                diagnostics = {
+                    globals = { "love", "vim" },
+                },
+                workspace = {
+                    checkThirdParty = true,
+                    library = {
+                        vim.env.VIMRUNTIME,
+                    },
+                },
+                telemetry = {
+                    enable = false,
+                },
+            },
+        },
+    })
+end
+
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = "lua",
+    callback = start_lua_ls,
+})
+
+-- Start for any lua buffers already open at init time
+if vim.bo.filetype == "lua" then
+    start_lua_ls()
+end
+
+vim.api.nvim_create_autocmd("BufWritePre", {
+    pattern = "*.lua",
     callback = function()
         vim.lsp.buf.format({ async = false })
     end,
