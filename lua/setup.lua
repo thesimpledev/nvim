@@ -84,3 +84,35 @@ require('fidget').setup({
 require('claudecode').setup()
 
 require('godotdev').setup({})
+
+require('nvim-treesitter-textobjects').setup({
+    select = {
+        lookahead = true,
+    },
+    move = {
+        set_jumps = true,
+    },
+})
+
+local ts_select = function(query)
+    return function()
+        require('nvim-treesitter-textobjects.select').select_textobject(query, 'textobjects')
+    end
+end
+local ts_move = function(fn, query)
+    return function()
+        require('nvim-treesitter-textobjects.move')[fn](query, 'textobjects')
+    end
+end
+
+vim.keymap.set({ 'n', 'x', 'o' }, ']f', ts_move('goto_next_start', '@function.outer'),  { desc = 'Next function start' })
+vim.keymap.set({ 'n', 'x', 'o' }, '[f', ts_move('goto_previous_start', '@function.outer'), { desc = 'Prev function start' })
+vim.keymap.set({ 'n', 'x', 'o' }, ']F', ts_move('goto_next_end', '@function.outer'),    { desc = 'Next function end' })
+vim.keymap.set({ 'n', 'x', 'o' }, '[F', ts_move('goto_previous_end', '@function.outer'),   { desc = 'Prev function end' })
+vim.keymap.set({ 'n', 'x', 'o' }, ']c', ts_move('goto_next_start', '@class.outer'),     { desc = 'Next class start' })
+vim.keymap.set({ 'n', 'x', 'o' }, '[c', ts_move('goto_previous_start', '@class.outer'),    { desc = 'Prev class start' })
+
+vim.keymap.set({ 'x', 'o' }, 'af', ts_select('@function.outer'), { desc = 'Around function' })
+vim.keymap.set({ 'x', 'o' }, 'if', ts_select('@function.inner'), { desc = 'Inner function' })
+vim.keymap.set({ 'x', 'o' }, 'ac', ts_select('@class.outer'),    { desc = 'Around class' })
+vim.keymap.set({ 'x', 'o' }, 'ic', ts_select('@class.inner'),    { desc = 'Inner class' })

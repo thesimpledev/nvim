@@ -12,6 +12,7 @@ Plug 'hrsh7th/cmp-cmdline'         " Command-line completion
 Plug 'hrsh7th/vim-vsnip'
 Plug 'hrsh7th/vim-vsnip-integ'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'} " Better syntax highlighting
+Plug 'nvim-treesitter/nvim-treesitter-textobjects', {'branch': 'main'} " Textobjects & motions
 Plug 'nvim-lua/plenary.nvim'       " Required by some plugins
 Plug 'nvim-telescope/telescope.nvim' " Fuzzy finder
 Plug 'windwp/nvim-autopairs'       " Autopairs for brackets and braces
