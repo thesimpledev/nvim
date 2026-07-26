@@ -51,7 +51,6 @@ vim.keymap.set('n', '<Leader>ca', vim.lsp.buf.code_action, { noremap = true, sil
 -- C/C++ CMake build cycle (see lua/cppbuild.lua)
 vim.keymap.set('n', '<Leader>tc', ':CppConfigure<CR>', { noremap = true, silent = true, desc = "C++ configure (cmake)" })
 vim.keymap.set('n', '<Leader>tb', ':CppBuild<CR>', { noremap = true, silent = true, desc = "C++ build" })
-vim.keymap.set('n', '<Leader>tr', ':CppRun<CR>', { noremap = true, silent = true, desc = "C++ build and run" })
 vim.keymap.set('n', '<Leader>tt', ':CppTest<CR>', { noremap = true, silent = true, desc = "C++ test (ctest)" })
 
 vim.keymap.set('n', '<Leader>w', function()

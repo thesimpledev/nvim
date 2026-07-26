@@ -28,9 +28,9 @@ endif()
 set(CMAKE_C_FLAGS_DEBUG "-O0 -g")
 set(CMAKE_C_FLAGS_RELEASE "-O2 -march=native -DNDEBUG")
 
-# Every .c file under src/. Re-run <leader>tc after adding a new file so CMake
-# picks it up. To list files by hand instead, replace this with an explicit
-# list in add_executable.
+# Every .c file under src/. CONFIGURE_DEPENDS makes the build re-check for new
+# files each time, so adding a .c file needs nothing beyond a build. To list
+# files by hand instead, replace this with an explicit list in add_executable.
 file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS src/*.c)
 
 add_executable(myproject ${SOURCES})

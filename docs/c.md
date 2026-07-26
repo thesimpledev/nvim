@@ -69,7 +69,7 @@ CompileFlags:
 which points clangd at `build/compile_commands.json` explicitly rather than
 letting it search.
 
-## Build, run, test
+## Build and test
 
 `lua/cppbuild.lua`. All CMake driven, all asynchronous, all language neutral,
 so these work identically for C and C++.
@@ -78,17 +78,20 @@ so these work identically for C and C++.
 |-----|---------|--------|
 | `<Space>tc` | `:CppConfigure` | `cmake -S . -B build -G Ninja`, prompts for build type (default Debug) |
 | `<Space>tb` | `:CppBuild` | `cmake --build build`, errors to quickfix |
-| `<Space>tr` | `:CppRun` | Build, then run the binary in a terminal split |
 | `<Space>tt` | `:CppTest` | `ctest --test-dir build --output-on-failure` |
 | | `:CInit` | Copy the C templates into the current directory |
+
+Running the program is not done from inside Neovim. Build here so errors land
+in quickfix, then run it from a normal terminal:
+
+```
+cmake --build build && ./build/myproject
+```
 
 Notes:
 
 - Only one job runs at a time. Starting a second gives
   "cppbuild: a job is already running" rather than two competing builds.
-- `:CppRun` finds executables under `build/` and skips `CMakeFiles/`, which
-  holds CMake's own compiler probe binaries. One match runs directly, several
-  prompt, none prompts for a path.
 - Compiler errors are parsed into quickfix by errorformat, so `:cc`, `:cn` and
   `:cp` navigate them. clang-tidy and clang-analyzer findings come through the
   same path, including the analyzer's note chain, which is what makes an
@@ -118,8 +121,10 @@ file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS src/*.c)
 add_executable(myproject ${SOURCES})
 ```
 
-so a project with a hundred files needs no more typing than one. Re-run
-`<Space>tc` after adding a file.
+so a project with a hundred files needs no more typing than one.
+`CONFIGURE_DEPENDS` makes the build re-check for new files each time, so
+adding a `.c` file needs nothing beyond a build. `<Space>tc` is only for the
+first configure and for when you change `CMakeLists.txt` itself.
 
 ### Just learning, one file
 

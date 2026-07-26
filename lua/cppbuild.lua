@@ -149,49 +149,9 @@ function M.build(on_success)
     end)
 end
 
--- Executables CMake produced, newest first.
-local function find_executables(root)
-    local found = {}
-    for name, kind in vim.fs.dir(build_path(root), { depth = 3 }) do
-        if kind == "file" then
-            -- CMakeFiles holds CMake's own compiler probe binaries, skip it.
-            local path = build_path(root) .. "/" .. name
-            if vim.fn.executable(path) == 1 and not name:find("CMakeFiles", 1, true) then
-                table.insert(found, path)
-            end
-        end
-    end
-    return found
-end
-
--- Build, then run the resulting binary in a terminal split.
-function M.run_binary()
-    M.build(function(root)
-        local exes = find_executables(root)
-
-        local function launch(path)
-            vim.cmd("botright split")
-            vim.cmd("resize 15")
-            vim.fn.jobstart({ path }, { term = true, cwd = root })
-            vim.cmd("startinsert")
-        end
-
-        if #exes == 0 then
-            local path = vim.fn.input("Path to executable: ", build_path(root) .. "/", "file")
-            if path ~= "" then
-                launch(path)
-            end
-        elseif #exes == 1 then
-            launch(exes[1])
-        else
-            vim.ui.select(exes, { prompt = "Run which executable?" }, function(choice)
-                if choice then
-                    launch(choice)
-                end
-            end)
-        end
-    end)
-end
+-- Running the binary is deliberately not done here. Build in the editor so
+-- errors land in quickfix, then run it from a normal terminal:
+--   cmake --build build && ./build/<name>
 
 -- ctest --test-dir build --output-on-failure
 function M.test()
@@ -272,10 +232,6 @@ vim.api.nvim_create_user_command("CppBuild", function()
     M.build()
 end, {
     desc = "Build the CMake project, errors to quickfix",
-})
-
-vim.api.nvim_create_user_command("CppRun", M.run_binary, {
-    desc = "Build, then run the resulting binary in a terminal split",
 })
 
 vim.api.nvim_create_user_command("CppTest", M.test, {

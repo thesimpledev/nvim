@@ -76,7 +76,6 @@
 |-----|---------|--------|
 | `<Space>tc` | `:CppConfigure` | Configure the build directory (cmake, Ninja, prompts for build type) |
 | `<Space>tb` | `:CppBuild` | Build; compiler errors go to the quickfix list |
-| `<Space>tr` | `:CppRun` | Build, then run the binary in a terminal split |
 | `<Space>tt` | `:CppTest` | Run ctest |
 | | `:CppInit` | Copy `.clang-format`, `.clang-tidy`, `.clangd` and `CMakeLists.txt` into the current directory |
 

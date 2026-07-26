@@ -13,7 +13,6 @@ behaviour, and gdb. This file covers what is specific to C++.
 |-----|---------|--------|
 | `<Space>tc` | `:CppConfigure` | Configure the build directory |
 | `<Space>tb` | `:CppBuild` | Build, errors to quickfix |
-| `<Space>tr` | `:CppRun` | Build and run in a terminal split |
 | `<Space>tt` | `:CppTest` | ctest |
 | | `:CppInit` | Copy templates in |
 
