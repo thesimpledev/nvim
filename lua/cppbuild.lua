@@ -202,6 +202,24 @@ function M.init_project(lang)
         end
     end
 
+    -- Anything under templates/<lang>/src goes into ./src, so a fresh project
+    -- has a source file to build and is not an empty shell.
+    local template_src = templates .. "/src"
+    if vim.fn.isdirectory(template_src) == 1 then
+        vim.fn.mkdir(root .. "/src", "p")
+        for name, kind in vim.fs.dir(template_src) do
+            if kind == "file" then
+                local dest = root .. "/src/" .. name
+                if vim.fn.filereadable(dest) == 1 then
+                    table.insert(skipped, "src/" .. name)
+                else
+                    vim.fn.writefile(vim.fn.readfile(template_src .. "/" .. name), dest)
+                    table.insert(copied, "src/" .. name)
+                end
+            end
+        end
+    end
+
     local msg = {}
     if #copied > 0 then
         table.insert(msg, "created " .. table.concat(copied, ", "))

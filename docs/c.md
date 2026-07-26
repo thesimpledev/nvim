@@ -85,8 +85,11 @@ Running the program is not done from inside Neovim. Build here so errors land
 in quickfix, then run it from a normal terminal:
 
 ```
-cmake --build build && ./build/myproject
+cmake --build build && ./build/<folder-name>
 ```
+
+The binary is named after the project folder, so in `~/.../c/p1` it is
+`./build/p1`.
 
 Notes:
 
@@ -109,6 +112,7 @@ name.
 | `.clangd` | Points clangd at `build/` |
 | `.clang-format` | 4 space indent, 100 column, matching `init.lua` |
 | `.clang-tidy` | C check set: `bugprone-*`, `cert-*`, `clang-analyzer-*`, `portability-*`, `performance-*`, `misc-*` |
+| `src/main.c` | Hello World starter, so the project builds straight away |
 
 `:CppInit` is the C++ equivalent and copies from `templates/cpp/`. The two sets
 are separate because `CMakeLists.txt` and `.clang-tidy` genuinely differ:
@@ -117,9 +121,15 @@ are separate because `CMakeLists.txt` and `.clang-tidy` genuinely differ:
 The C `CMakeLists.txt` picks up sources with:
 
 ```cmake
+get_filename_component(PROJECT_DIR_NAME ${CMAKE_CURRENT_SOURCE_DIR} NAME)
+project(${PROJECT_DIR_NAME} LANGUAGES C)
+
 file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS src/*.c)
-add_executable(myproject ${SOURCES})
+add_executable(${PROJECT_NAME} ${SOURCES})
 ```
+
+The project takes its name from the folder it sits in, so there is nothing to
+rename after `:CInit`.
 
 so a project with a hundred files needs no more typing than one.
 `CONFIGURE_DEPENDS` makes the build re-check for new files each time, so
