@@ -66,25 +66,6 @@ vim.api.nvim_create_autocmd("BufWritePre", {
     end,
 })
 
--- Erlang Configuration
-vim.lsp.config('erlangls', {
-    capabilities = capabilities,
-    cmd = { "erlang_ls" },
-    root_dir = vim.fs.root(0, {"rebar.config", "erlang.mk", ".git"}),
-    settings = {
-        erlangls = {}
-    }
-})
-
-vim.lsp.enable('erlangls')
-
-vim.api.nvim_create_autocmd("BufWritePre", {
-    pattern = {"*.erl", "*.hrl"},
-    callback = function()
-        vim.lsp.buf.format({ async = false })
-    end,
-})
-
 -- Elixir Configuration
 vim.lsp.config('elixirls', {
     capabilities = capabilities,
@@ -195,17 +176,23 @@ vim.lsp.config('clangd', {
         "--clang-tidy",
         "--header-insertion=iwyu",
         "--completion-style=detailed",
-        "--function-arg-placeholders",
+        -- clangd 22 rejects this as a bare flag: it needs the value, and
+        -- without it clangd exits 1 and no C++ LSP starts at all.
+        "--function-arg-placeholders=1",
     },
     init_options = {
         clangdFileStatus = true,
     },
+    -- Resolved per buffer, unlike the root_dir = vim.fs.root(0, ...) used
+    -- above, which is evaluated once against whatever buffer happens to be
+    -- current while this file is being read.
+    root_markers = { ".clangd", "compile_commands.json", "CMakeLists.txt", ".git" },
 })
 
 vim.lsp.enable('clangd')
 
 vim.api.nvim_create_autocmd("BufWritePre", {
-    pattern = {"*.c", "*.h", "*.cpp", "*.hpp"},
+    pattern = {"*.c", "*.h", "*.cpp", "*.hpp", "*.cc", "*.cxx", "*.hh", "*.hxx"},
     callback = function()
         vim.lsp.buf.format({ async = false })
     end,

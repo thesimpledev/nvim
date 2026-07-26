@@ -48,6 +48,12 @@ vim.keymap.set('c', '<c-s>', function() require('flash').toggle() end, { desc = 
 
 vim.keymap.set('n', '<Leader>ca', vim.lsp.buf.code_action, { noremap = true, silent = true })
 
+-- C/C++ CMake build cycle (see lua/cppbuild.lua)
+vim.keymap.set('n', '<Leader>tc', ':CppConfigure<CR>', { noremap = true, silent = true, desc = "C++ configure (cmake)" })
+vim.keymap.set('n', '<Leader>tb', ':CppBuild<CR>', { noremap = true, silent = true, desc = "C++ build" })
+vim.keymap.set('n', '<Leader>tr', ':CppRun<CR>', { noremap = true, silent = true, desc = "C++ build and run" })
+vim.keymap.set('n', '<Leader>tt', ':CppTest<CR>', { noremap = true, silent = true, desc = "C++ test (ctest)" })
+
 vim.keymap.set('n', '<Leader>w', function()
 	for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
 		if vim.api.nvim_win_get_config(win).relative ~= '' then

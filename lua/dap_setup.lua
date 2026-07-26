@@ -102,6 +102,42 @@ dap.configurations.zig = {
     },
 }
 
+-- C/C++ Configuration
+-- gdb 14 and later speaks DAP itself, so there is no separate adapter binary
+-- to install (no lldb-dap, no codelldb).
+dap.adapters.gdb = {
+    type = 'executable',
+    command = 'gdb',
+    args = { '--interpreter=dap', '--eval-command', 'set print pretty on' },
+}
+
+-- Debug builds only. An optimised binary has its variables folded away and its
+-- line table reordered, so stepping through one is misleading rather than
+-- broken. <leader>tc defaults to Debug.
+local function pick_cpp_binary()
+    return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/build/', 'file')
+end
+
+dap.configurations.cpp = {
+    {
+        name = 'Launch',
+        type = 'gdb',
+        request = 'launch',
+        program = pick_cpp_binary,
+        cwd = '${workspaceFolder}',
+        stopAtBeginningOfMainSubprogram = false,
+    },
+    {
+        name = 'Attach to process',
+        type = 'gdb',
+        request = 'attach',
+        processId = require('dap.utils').pick_process,
+        cwd = '${workspaceFolder}',
+    },
+}
+
+dap.configurations.c = dap.configurations.cpp
+
 vim.keymap.set('n', '<F5>', dap.continue, { desc = 'Debug Continue' })
 vim.keymap.set('n', '<leader>dc', dap.continue,  { desc = 'Debug Continue' })
 vim.keymap.set('n', '<leader>do', dap.step_over, { desc = 'Debug Step Over' })

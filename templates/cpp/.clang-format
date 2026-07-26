@@ -1,0 +1,18 @@
+# clang-format is what actually formats C++ on save (via clangd).
+# Without this file clangd silently applies LLVM style with 2 space indents,
+# which fights the 4 space settings in init.lua.
+BasedOnStyle: LLVM
+IndentWidth: 4
+TabWidth: 4
+UseTab: Never
+ColumnLimit: 100
+AccessModifierOffset: -4
+PointerAlignment: Left
+ReferenceAlignment: Left
+AllowShortFunctionsOnASingleLine: Inline
+AllowShortIfStatementsOnASingleLine: Never
+BreakBeforeBraces: Attach
+NamespaceIndentation: None
+SortIncludes: CaseSensitive
+IncludeBlocks: Regroup
+SpaceAfterTemplateKeyword: false

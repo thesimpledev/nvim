@@ -1,0 +1,23 @@
+# clangd already runs clang-tidy (--clang-tidy in lsp.lua), but its default
+# check set is nearly empty. These groups turn it into a live reviewer:
+#   bugprone-*        real defects
+#   cert-*            CERT C secure coding rules
+#   clang-analyzer-*  the static analyzer, catches out of bounds and leaks
+#   portability-*     assumptions that break on other platforms
+#   performance-*     accidental slowdowns
+#   misc-*            everything else worth having
+#
+# modernize-* is deliberately absent. It rewrites toward C++ idioms and means
+# nothing in C.
+Checks: >
+  bugprone-*,
+  cert-*,
+  clang-analyzer-*,
+  portability-*,
+  performance-*,
+  misc-*,
+  -bugprone-easily-swappable-parameters
+
+WarningsAsErrors: ''
+HeaderFilterRegex: '.*'
+FormatStyle: file

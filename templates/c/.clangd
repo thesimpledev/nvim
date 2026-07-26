@@ -1,0 +1,9 @@
+# clangd needs compile_commands.json to know how each file is compiled: which
+# standard, which include paths, which defines. Without it you get almost no
+# completion and a lot of wrong errors.
+#
+# CMake writes that file into build/ when configured with
+# -DCMAKE_EXPORT_COMPILE_COMMANDS=ON, which <leader>tc does. This line points
+# clangd straight at it instead of leaving it to guess.
+CompileFlags:
+  CompilationDatabase: build
