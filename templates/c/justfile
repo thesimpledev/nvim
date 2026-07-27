@@ -1,0 +1,21 @@
+# `just build` from the project root: compile, then run.
+#
+# The binary is named after this folder, which is the same rule CMakeLists.txt
+# uses, so nothing here needs editing when the project is copied or renamed.
+
+project := file_name(justfile_directory())
+
+# Compile and run, so the only thing on screen is the program's own output.
+#
+# The build output is captured rather than sent to /dev/null, because ninja
+# prints compiler errors on stdout: discarding it would hide the one thing you
+# need when a build fails. On failure the whole lot is printed and the binary is
+# not run, so you never look at output from the last version that compiled.
+build:
+    #!/bin/sh
+    clear
+    if ! out=$(cmake --build build 2>&1); then
+        printf '%s\n' "$out" >&2
+        exit 1
+    fi
+    ./build/{{project}}

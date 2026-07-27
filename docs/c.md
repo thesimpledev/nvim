@@ -79,17 +79,32 @@ so these work identically for C and C++.
 | `<Space>tc` | `:CppConfigure` | `cmake -S . -B build -G Ninja`, prompts for build type (default Debug) |
 | `<Space>tb` | `:CppBuild` | `cmake --build build`, errors to quickfix |
 | `<Space>tt` | `:CppTest` | `ctest --test-dir build --output-on-failure` |
-| | `:CInit` | Copy the C templates into the current directory |
+| | `:CInit` | Copy the C templates in, then configure `build/` |
+
+`:CInit` configures for you, so a fresh project builds immediately and
+`<Space>tc` is not part of starting one. It only configures when `build/` is
+absent, so running it again in an existing project will not disturb a build
+directory you already have.
 
 Running the program is not done from inside Neovim. Build here so errors land
 in quickfix, then run it from a normal terminal:
+
+```
+just build
+```
+
+That is the `justfile` the templates bring in. It compiles, and on success runs
+the binary with nothing else on screen. On failure it prints the compiler output
+and does not run, so what you are looking at is never the last version that
+happened to compile. The long form is:
 
 ```
 cmake --build build && ./build/<folder-name>
 ```
 
 The binary is named after the project folder, so in `~/.../c/p1` it is
-`./build/p1`.
+`./build/p1`. The justfile works this out with
+`file_name(justfile_directory())`, so nothing in it needs editing per project.
 
 Notes:
 
@@ -103,8 +118,7 @@ Notes:
 ## Templates
 
 `:CInit` copies these from `templates/c/` into the current directory, skipping
-any that already exist. Nothing needs editing afterwards except the project
-name.
+any that already exist. Nothing needs editing afterwards.
 
 | File | Purpose |
 |------|---------|
@@ -112,7 +126,12 @@ name.
 | `.clangd` | Points clangd at `build/` |
 | `.clang-format` | 4 space indent, 100 column, matching `init.lua` |
 | `.clang-tidy` | C check set: `bugprone-*`, `cert-*`, `clang-analyzer-*`, `portability-*`, `performance-*`, `misc-*` |
+| `justfile` | `just build`: compile, then run the binary |
 | `src/main.c` | Hello World starter, so the project builds straight away |
+
+`templates/cpp/` has no `justfile`, because its `CMakeLists.txt` still hardcodes
+`project(myproject)` rather than taking the folder name, so the same recipe
+would look for the wrong binary.
 
 `:CppInit` is the C++ equivalent and copies from `templates/cpp/`. The two sets
 are separate because `CMakeLists.txt` and `.clang-tidy` genuinely differ:
@@ -133,8 +152,9 @@ rename after `:CInit`.
 
 so a project with a hundred files needs no more typing than one.
 `CONFIGURE_DEPENDS` makes the build re-check for new files each time, so
-adding a `.c` file needs nothing beyond a build. `<Space>tc` is only for the
-first configure and for when you change `CMakeLists.txt` itself.
+adding a `.c` file needs nothing beyond a build. Since `:CInit` does the first
+configure, `<Space>tc` is left for when you change `CMakeLists.txt` itself, or
+want a build type other than the Debug that `:CInit` picks.
 
 ### Just learning, one file
 
@@ -194,8 +214,9 @@ Configure with clang rather than the default gcc:
 CC=clang cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Debug
 ```
 
-`<Space>tc` does not set `CC`, so either export it or configure once from the
-shell.
+Neither `<Space>tc` nor the configure inside `:CInit` sets `CC`, so both give
+you the default gcc. Either export `CC` or delete `build/` and configure once
+from the shell.
 
 ### Four things that will cost you an evening
 

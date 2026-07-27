@@ -86,19 +86,7 @@ local function to_quickfix(output, title)
 end
 
 -- cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=<type> -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
-function M.configure()
-    local root = project_root()
-
-    if vim.fn.filereadable(root .. "/CMakeLists.txt") == 0 then
-        vim.notify("cppbuild: no CMakeLists.txt in " .. root .. " (try :CInit or :CppInit)", vim.log.levels.ERROR)
-        return
-    end
-
-    local build_type = vim.fn.input("Build type: ", "Debug")
-    if build_type == "" then
-        return
-    end
-
+local function configure_at(root, build_type)
     local cmd = {
         "cmake",
         "-S", ".",
@@ -115,6 +103,22 @@ function M.configure()
             vim.notify("cppbuild: configure failed\n" .. table.concat(output, "\n"), vim.log.levels.ERROR)
         end
     end)
+end
+
+function M.configure()
+    local root = project_root()
+
+    if vim.fn.filereadable(root .. "/CMakeLists.txt") == 0 then
+        vim.notify("cppbuild: no CMakeLists.txt in " .. root .. " (try :CInit or :CppInit)", vim.log.levels.ERROR)
+        return
+    end
+
+    local build_type = vim.fn.input("Build type: ", "Debug")
+    if build_type == "" then
+        return
+    end
+
+    configure_at(root, build_type)
 end
 
 -- cmake --build build. on_success is called only when the build succeeded.
@@ -189,7 +193,7 @@ function M.init_project(lang)
     local templates = vim.fn.stdpath("config") .. "/templates/" .. lang
     local copied, skipped = {}, {}
 
-    for _, name in ipairs({ ".clang-format", ".clang-tidy", ".clangd", "CMakeLists.txt" }) do
+    for _, name in ipairs({ ".clang-format", ".clang-tidy", ".clangd", "CMakeLists.txt", "justfile" }) do
         local dest = root .. "/" .. name
         if vim.fn.filereadable(dest) == 1 then
             table.insert(skipped, name)
@@ -228,6 +232,15 @@ function M.init_project(lang)
         table.insert(msg, "kept existing " .. table.concat(skipped, ", "))
     end
     vim.notify("cppbuild: " .. table.concat(msg, "; "), vim.log.levels.INFO)
+
+    -- Configure straight away so the project is buildable without a separate
+    -- <Space>tc. Making build/ by hand is not enough: cmake has to generate the
+    -- ninja files inside it before `cmake --build build` will do anything.
+    if vim.fn.isdirectory(build_path(root)) == 0
+        and vim.fn.filereadable(root .. "/CMakeLists.txt") == 1
+    then
+        configure_at(root, "Debug")
+    end
 end
 
 vim.api.nvim_create_user_command("CInit", function()
