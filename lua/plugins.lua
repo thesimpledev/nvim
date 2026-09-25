@@ -24,9 +24,7 @@ Plug 'wakatime/vim-wakatime'
 Plug 'tanvirtin/monokai.nvim'
 Plug 'windwp/nvim-ts-autotag'
 Plug 'mfussenegger/nvim-dap'                 
-Plug 'mfussenegger/nvim-dap-python'         
-Plug 'ray-x/go.nvim'                       
-Plug 'ray-x/guihua.lua'                   
+Plug 'mfussenegger/nvim-dap-python'
 
 Plug 'norcalli/nvim-colorizer.lua'  " Color visualization in CSS/HTML
 Plug 'mattn/emmet-vim'              " HTML quick expansion

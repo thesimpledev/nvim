@@ -70,8 +70,15 @@ Two consequences to be aware of:
   diagnostics. The `[TestName]` prefix in the message is how you tell them
   apart.
 
-There is no keybinding to run this. It is save-driven only. To run tests
-without the automatic path, use a terminal.
+Two keys run the same runner on demand, active only in Go buffers:
+
+| Key | Action |
+|-----|--------|
+| `<Space>tt` | Run the package tests |
+| `<Space>tf` | Run the test under the cursor (`go test -run '^TestName$'`) |
+
+`<Space>tf` finds the enclosing function with treesitter. If the cursor is not
+inside a `Test...` function it prompts for the name.
 
 ## Debugging
 
@@ -96,14 +103,11 @@ There is one Go-specific debug key:
 `<Space>dT` reads the word under the cursor. If it does not start with `Test`
 it prompts you, then runs that single test anchored with `^...$`.
 
-Note: `CustomCommands.md` describes `<Space>dT` as "Toggle virtual text". That
-is wrong. It is debug-test-under-cursor.
-
 ## Plugins
 
-`ray-x/go.nvim` and `ray-x/guihua.lua` are installed and loaded. They are not
-configured beyond defaults in this setup, so most of what you use day to day is
-gopls plus the custom test runner.
+No Go-specific plugin. The setup is gopls plus the custom test runner in
+`lua/gotest.lua`. Refactorings (extract, inline, rename) come from gopls
+through the built-in `gra` and `grn` keys.
 
 ## Treesitter
 

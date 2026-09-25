@@ -27,9 +27,16 @@
 | `gr` / `<Space>r` | Find references |
 | `<F2>` / `<Space>R` | Rename symbol |
 | `<C-k>` | Show signature help |
-| `<Space>ca` | Code action |
 | `<Space>ds` | Telescope document symbols |
 | `<Space>ws` | Telescope workspace symbols |
+| `gra` (normal/visual) | Code action: extract variable/function, inline, quick fixes |
+| `grn` | Rename symbol across files |
+| `grr` | Find references / usages |
+| `gri` | Go to implementation |
+| `grt` | Go to type definition |
+| `gO` | Document symbols outline |
+| `K` | Hover: docs, signature, return type |
+| `<C-s>` (insert) | Signature help while typing a call |
 
 ## Diagnostics
 | Key | Action |
@@ -69,15 +76,26 @@
 | `<Space>dl` | Run last debug config |
 | `<Space>dt` | Terminate debug session |
 | `<Space>dU` | Toggle DAP UI |
-| `<Space>dT` | Toggle virtual text |
+| `<Space>dT` | Debug the Go test under the cursor |
+
+## Go
+| Key | Action |
+|-----|--------|
+| `<Space>tt` | Run the package tests |
+| `<Space>tf` | Run the test under the cursor |
+
+Tests also run automatically on every save. Keys are active only in Go buffers.
 
 ## C/C++ (CMake)
+Keys are active only in C/C++ buffers.
+
 | Key | Command | Action |
 |-----|---------|--------|
 | `<Space>tc` | `:CppConfigure` | Configure the build directory (cmake, Ninja, prompts for build type) |
 | `<Space>tb` | `:CppBuild` | Build; compiler errors go to the quickfix list |
 | `<Space>tt` | `:CppTest` | Run ctest |
-| | `:CppInit` | Copy `.clang-format`, `.clang-tidy`, `.clangd` and `CMakeLists.txt` into the current directory |
+| | `:CInit` | Copy the C templates (`.clang-format`, `.clang-tidy`, `.clangd`, `CMakeLists.txt`, `justfile`, `src/main.c`) into the current directory and configure |
+| | `:CppInit` | Copy the C++ templates (`.clang-format`, `.clang-tidy`, `.clangd`, `CMakeLists.txt`) into the current directory and configure |
 
 Debugging C++ uses the same DAP keys as everything else. `<F5>` prompts for the
 binary under `build/` and attaches gdb.
@@ -90,6 +108,15 @@ binary under `build/` and attaches gdb.
 | `<C-p>` | Select previous completion item |
 | `<C-y>` | Confirm selection |
 | `<C-Space>` | Trigger completion |
+
+## Treesitter (Motions and Text Objects)
+| Key | Action |
+|-----|--------|
+| `]f` / `[f` | Next / previous function start |
+| `]F` / `[F` | Next / previous function end |
+| `]c` / `[c` | Next / previous class start |
+| `af` / `if` (visual/operator) | Around / inner function |
+| `ac` / `ic` (visual/operator) | Around / inner class |
 
 ## Flash (Navigation)
 | Key | Action |

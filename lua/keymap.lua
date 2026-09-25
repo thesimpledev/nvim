@@ -46,12 +46,31 @@ vim.keymap.set({ 'o', 'x' }, 'R', function() require('flash').treesitter_search(
 vim.keymap.set('c', '<c-s>', function() require('flash').toggle() end, { desc = 'Toggle Flash Search' })
 
 
-vim.keymap.set('n', '<Leader>ca', vim.lsp.buf.code_action, { noremap = true, silent = true })
+local function on_filetype(filetypes, set_maps)
+    vim.api.nvim_create_autocmd("FileType", {
+        pattern = filetypes,
+        callback = function(args)
+            set_maps(args.buf)
+        end,
+    })
+    for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+        if vim.api.nvim_buf_is_loaded(buf) and vim.tbl_contains(filetypes, vim.bo[buf].filetype) then
+            set_maps(buf)
+        end
+    end
+end
 
 -- C/C++ CMake build cycle (see lua/cppbuild.lua)
-vim.keymap.set('n', '<Leader>tc', ':CppConfigure<CR>', { noremap = true, silent = true, desc = "C++ configure (cmake)" })
-vim.keymap.set('n', '<Leader>tb', ':CppBuild<CR>', { noremap = true, silent = true, desc = "C++ build" })
-vim.keymap.set('n', '<Leader>tt', ':CppTest<CR>', { noremap = true, silent = true, desc = "C++ test (ctest)" })
+on_filetype({ "c", "cpp" }, function(buf)
+    vim.keymap.set('n', '<Leader>tc', ':CppConfigure<CR>', { noremap = true, silent = true, buffer = buf, desc = "C++ configure (cmake)" })
+    vim.keymap.set('n', '<Leader>tb', ':CppBuild<CR>', { noremap = true, silent = true, buffer = buf, desc = "C++ build" })
+    vim.keymap.set('n', '<Leader>tt', ':CppTest<CR>', { noremap = true, silent = true, buffer = buf, desc = "C++ test (ctest)" })
+end)
+
+on_filetype({ "go" }, function(buf)
+    vim.keymap.set('n', '<Leader>tt', function() require('gotest').run_tests_for_file() end, { noremap = true, silent = true, buffer = buf, desc = "Go test package" })
+    vim.keymap.set('n', '<Leader>tf', function() require('gotest').run_test_under_cursor() end, { noremap = true, silent = true, buffer = buf, desc = "Go test under cursor" })
+end)
 
 vim.keymap.set('n', '<Leader>w', function()
 	for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do

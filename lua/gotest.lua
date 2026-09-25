@@ -41,30 +41,18 @@ local function parse_test_output(output)
     return diagnostics
 end
 
--- Run tests for the current file
-function M.run_tests_for_file()
-    local file = vim.fn.expand("%:p")
-    
-    -- Only run for Go files
-    if not file:match("%.go$") then
-        return
-    end
-    
-    local dir = vim.fn.expand("%:p:h")
-    
+local function run(file, dir, test_cmd)
     -- Cancel any existing job for this file
     if test_jobs[file] then
         vim.fn.jobstop(test_jobs[file])
     end
-    
+
     -- Clear existing diagnostics
     local namespace = vim.api.nvim_create_namespace("go_test")
     vim.diagnostic.reset(namespace)
-    
+
     local output = {}
-    -- Test the entire package directory instead of individual files
-    local test_cmd = {"go", "test", "-tags=exclude_tests", "-v", "."}
-    
+
     -- Start the test job
     test_jobs[file] = vim.fn.jobstart(test_cmd, {
         cwd = dir,
@@ -150,6 +138,62 @@ function M.run_tests_for_file()
             end
         end,
     })
+end
+
+local function enclosing_function_name()
+    local ok, node = pcall(vim.treesitter.get_node)
+    if not ok then
+        return nil
+    end
+    while node do
+        if node:type() == "function_declaration" then
+            local name = node:field("name")[1]
+            if name then
+                return vim.treesitter.get_node_text(name, 0)
+            end
+            return nil
+        end
+        node = node:parent()
+    end
+    return nil
+end
+
+-- Run tests for the current file
+function M.run_tests_for_file()
+    local file = vim.fn.expand("%:p")
+
+    -- Only run for Go files
+    if not file:match("%.go$") then
+        return
+    end
+
+    local dir = vim.fn.expand("%:p:h")
+
+    -- Test the entire package directory instead of individual files
+    local test_cmd = {"go", "test", "-tags=exclude_tests", "-v", "."}
+
+    run(file, dir, test_cmd)
+end
+
+function M.run_test_under_cursor()
+    local file = vim.fn.expand("%:p")
+
+    if not file:match("%.go$") then
+        return
+    end
+
+    local test_name = enclosing_function_name() or ""
+    if not test_name:match("^Test") then
+        test_name = vim.fn.input("Test name: ", test_name)
+    end
+    if test_name == "" then
+        return
+    end
+
+    local dir = vim.fn.expand("%:p:h")
+    local test_cmd = {"go", "test", "-tags=exclude_tests", "-v", "-run", "^" .. test_name .. "$", "."}
+
+    run(file, dir, test_cmd)
 end
 
 return M
