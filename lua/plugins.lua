@@ -26,7 +26,7 @@ Plug 'windwp/nvim-ts-autotag'
 Plug 'mfussenegger/nvim-dap'                 
 Plug 'mfussenegger/nvim-dap-python'
 
-Plug 'norcalli/nvim-colorizer.lua'  " Color visualization in CSS/HTML
+Plug 'catgoose/nvim-colorizer.lua'  " Color visualization in CSS/HTML
 Plug 'mattn/emmet-vim'              " HTML quick expansion
 
 Plug 'NoahTheDuke/vim-just'
